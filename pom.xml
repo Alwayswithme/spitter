@@ -13,6 +13,19 @@
   </properties>
 
   <dependencies>
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -29,6 +42,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -36,12 +50,6 @@
       <artifactId>jsp-api</artifactId>
       <version>2.1</version>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${spring.version}</version>
     </dependency>
 
     <dependency>
@@ -72,15 +80,33 @@
       <version>${jackson.version}</version>
     </dependency>
 
+    <!-- Mybatis -->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
       <version>3.2.8</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.2.2</version>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>spitter</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/java/</directory>
+        <includes>
+          <include>**/*Mapper.xml</include>
+        </includes>
+        <excludes>
+          <exclude>**/*test*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

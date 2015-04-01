@@ -2,47 +2,53 @@ package com.springapp.mvc;
 
 import com.springapp.mvc.mapper.PersonMapper;
 import com.springapp.mvc.model.Person;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by phoenix on 4/1/15.
+ * @author phoenix
  */
 @Controller
 @RequestMapping("/person")
 public class PersonController {
+
+    @Autowired
+    private SqlSession sqlSession;
+
     @RequestMapping(value = "selectAll", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody List<Person> selectAll() throws IOException {
-        String resources = "mybatis.xml";
-        Reader reader = Resources.getResourceAsReader(resources);
-        SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(reader);
-
-        try (SqlSession sqlSession = ssFactory.openSession()) {
-            PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-            return mapper.selectAll();
-        }
+        return sqlSession.selectList("com.springapp.mvc.mapper.PersonMapper.selectAll");
     }
 
-    @RequestMapping(value = "selectOne", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Person selectOne(@RequestParam int id) throws IOException {
-        String resources = "mybatis.xml";
-        Reader reader = Resources.getResourceAsReader(resources);
-        SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(reader);
+    @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody Person selectOne(@PathVariable int id) throws IOException {
+        return sqlSession.selectOne("com.springapp.mvc.mapper.PersonMapper.selectOne", id);
+    }
 
-        try (SqlSession sqlSession = ssFactory.openSession()) {
-            PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-            return mapper.selectOne(id);
-        }
+    @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody Map<Integer, Person> selectAllAsMap() throws IOException {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        return mapper.selectPersonAsMapById();
+
+//        one-liner
+//        return sqlSession.selectMap("com.springapp.mvc.mapper.PersonMapper.selectAll", "age");
+    }
+
+    /**
+     * type-safe and more readable way
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Map<String,Object>> selectPersonAsMaps() throws IOException {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        return mapper.selectPersonAsMaps();
     }
 }
