@@ -1,14 +1,18 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+  <!-- load property -->
   <context:property-placeholder location="classpath:database/db.properties" />
 
-  <context:component-scan base-package="com.springapp.mvc"/>
+  <context:component-scan base-package="com.springapp.mvc" />
+
+  <mybatis:scan base-package="com.springapp.mvc.mapper" />
 
   <mvc:annotation-driven/>
 
@@ -21,13 +25,18 @@
 
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
-    <property name="mapperLocations" value="classpath:com/springapp/mvc/mapper/*Mapper.xml" />
     <property name="failFast" value="true" />
   </bean>
 
   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
     <constructor-arg index="0" ref="sqlSessionFactory" />
   </bean>
+
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <tx:annotation-driven transaction-manager="transactionManager" />
 
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/pages/"/>
