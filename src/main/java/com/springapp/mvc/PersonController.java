@@ -19,7 +19,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/person")
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class PersonController {
 
     @Autowired
@@ -59,6 +58,7 @@ public class PersonController {
         return mapper.count();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "insert", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Person insert(@RequestParam String name, @RequestParam int age) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
@@ -68,9 +68,11 @@ public class PersonController {
         return person;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "deleteById/{id}", method = RequestMethod.GET)
     public @ResponseBody int deleteOne(@PathVariable int id) throws IOException {
         int row = sqlSession.delete("com.springapp.mvc.mapper.PersonMapper.deleteById", id);
+        // manually rollback
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return row;
     }
