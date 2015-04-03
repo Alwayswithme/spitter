@@ -47,4 +47,11 @@ public interface PersonMapper {
             "WHERE FIND_IN_SET(id, #{ids})"
             })
     List<Person> selectSpecificIds(@Param("ids") String ids);
+
+    @Select({"SELECT * FROM Person",
+            "WHERE id = #{id}"})
+    @Results({
+            @Result(property = "devices", column = "id", many = @Many(select = "com.springapp.mvc.mapper.DeviceMapper.selectDevicesByOwner")),
+    })
+    Person selectPersonWithDevices(int id);
 }

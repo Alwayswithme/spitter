@@ -30,8 +30,9 @@ public class PersonController {
     }
 
     @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Person selectOne(@PathVariable int id) throws IOException {
-        return sqlSession.selectOne("com.springapp.mvc.mapper.PersonMapper.selectOne", id);
+    public @ResponseBody Person selectPersonWithDevices(@PathVariable int id) throws IOException {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        return mapper.selectPersonWithDevices(id);
     }
 
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET, produces = "application/json")
@@ -80,7 +81,6 @@ public class PersonController {
     @RequestMapping(value = "selectByIds", method = RequestMethod.GET)
     public @ResponseBody List<Person> selectByIds(@RequestParam(value = "ids") String ids) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        List<Person> people = mapper.selectSpecificIds(ids);
-        return people;
+        return mapper.selectSpecificIds(ids);
     }
 }
