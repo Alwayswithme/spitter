@@ -76,4 +76,11 @@ public class PersonController {
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return row;
     }
+
+    @RequestMapping(value = "selectByIds", method = RequestMethod.GET)
+    public @ResponseBody List<Person> selectByIds(@RequestParam(value = "ids") String ids) throws IOException {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        List<Person> people = mapper.selectSpecificIds(ids);
+        return people;
+    }
 }

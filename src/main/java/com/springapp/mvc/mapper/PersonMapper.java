@@ -40,4 +40,11 @@ public interface PersonMapper {
 
     @Delete("DELETE FROM Person WHERE id = #{id}")
     int deleteById(int id);
+
+    @Select({
+            "SELECT *",
+            "FROM Person",
+            "WHERE FIND_IN_SET(id, #{ids})"
+            })
+    List<Person> selectSpecificIds(@Param("ids") String ids);
 }
