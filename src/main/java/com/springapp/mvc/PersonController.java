@@ -32,7 +32,10 @@ public class PersonController {
     @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Person selectPersonWithDevices(@PathVariable int id) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        return mapper.selectPersonWithDevices(id);
+//        return mapper.selectPersonWithDevices(id);
+        Person person = mapper.selectPersonJoinDevices(id);
+        System.out.println(person.toString());
+        return person;
     }
 
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET, produces = "application/json")

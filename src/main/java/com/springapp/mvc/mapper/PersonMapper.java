@@ -54,4 +54,6 @@ public interface PersonMapper {
             @Result(property = "devices", column = "id", many = @Many(select = "com.springapp.mvc.mapper.DeviceMapper.selectDevicesByOwner")),
     })
     Person selectPersonWithDevices(int id);
+
+    Person selectPersonJoinDevices(int id);
 }

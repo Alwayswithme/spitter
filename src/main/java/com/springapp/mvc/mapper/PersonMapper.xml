@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springapp.mvc.mapper.PersonMapper">
+
+  <resultMap id="person" type="com.springapp.mvc.model.Person">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="age" column="age"/>
+  </resultMap>
+  <resultMap id="personJoinDevices" type="com.springapp.mvc.model.Person">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="age" column="age"/>
+    <collection property="devices" ofType="com.springapp.mvc.model.Device">
+      <id property="id" column="device_id"/>
+      <result property="name" column="device_name"/>
+      <result property="type" column="device_type"/>
+      <!--<association property="owner" resultMap="person"/>-->
+    </collection>
+  </resultMap>
+  <select id="selectPersonJoinDevices" parameterType="int" resultMap="personJoinDevices">
+    SELECT p.*,
+    d.id AS device_id,
+    d.name AS device_name,
+    d.type AS device_type,
+    d.owner_id AS device_owner_id
+    FROM Person p
+    LEFT JOIN Device d ON p.id = d.owner_id
+    WHERE p.id = #{id}
+  </select>
+
+</mapper>
