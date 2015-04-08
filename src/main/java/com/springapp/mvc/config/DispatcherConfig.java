@@ -50,6 +50,7 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource());
         sqlSessionFactory.setFailFast(true);
+        sqlSessionFactory.setTypeAliasesPackage("com.springapp.mvc.model");
         return sqlSessionFactory;
     }
 

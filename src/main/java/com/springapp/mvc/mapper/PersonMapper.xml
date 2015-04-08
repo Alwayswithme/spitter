@@ -5,16 +5,16 @@
 
 <mapper namespace="com.springapp.mvc.mapper.PersonMapper">
 
-  <resultMap id="person" type="com.springapp.mvc.model.Person">
+  <resultMap id="person" type="person">
     <id property="id" column="id"/>
     <result property="name" column="name"/>
     <result property="age" column="age"/>
   </resultMap>
-  <resultMap id="personJoinDevices" type="com.springapp.mvc.model.Person">
+  <resultMap id="personJoinDevices" type="person">
     <id property="id" column="id"/>
     <result property="name" column="name"/>
     <result property="age" column="age"/>
-    <collection property="devices" ofType="com.springapp.mvc.model.Device">
+    <collection property="devices" ofType="device">
       <id property="id" column="device_id"/>
       <result property="name" column="device_name"/>
       <result property="type" column="device_type"/>

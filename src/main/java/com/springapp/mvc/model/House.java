@@ -2,12 +2,14 @@ package com.springapp.mvc.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
 
 /**
  * @author phoenix
  */
 @NoArgsConstructor
 @Data
+@Alias("house")
 public class House {
     enum Size {
         SMALL,

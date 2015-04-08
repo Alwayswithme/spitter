@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.type.Alias;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
+@Alias("person")
 public class Person {
     @JsonIgnore
     private int id;      // when return person as json this field will be ignoring
