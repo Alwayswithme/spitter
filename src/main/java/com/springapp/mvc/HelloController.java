@@ -1,6 +1,7 @@
 package com.springapp.mvc;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class HelloController {
-    @Value("${url}")
-    private String dburl;
+
+    @Autowired
+    Environment environment;
 
 	@RequestMapping("welcome")
 	public String printWelcome(ModelMap model) {
@@ -20,7 +22,7 @@ public class HelloController {
     @RequestMapping("url")
     public String printUrl(ModelMap model) {
         // value injection
-        model.addAttribute("message", dburl);
+        model.addAttribute("message", environment.getProperty("url"));
         return "hello";
     }
 }
