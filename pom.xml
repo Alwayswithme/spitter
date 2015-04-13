@@ -9,6 +9,7 @@
 
   <properties>
     <spring.version>4.1.1.RELEASE</spring.version>
+    <mybatis.version>3.2.8</mybatis.version>
     <jackson.version>2.4.3</jackson.version>
   </properties>
 
@@ -70,7 +71,7 @@
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.2.8</version>
+      <version>${mybatis.version}</version>
     </dependency>
 
     <dependency>
@@ -91,6 +92,12 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.0.1</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.35</version>
     </dependency>
   </dependencies>
 

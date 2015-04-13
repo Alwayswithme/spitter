@@ -32,8 +32,9 @@ public class PersonController {
     @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Person selectPersonWithDevices(@PathVariable int id) {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-//        return mapper.selectPersonWithDevices(id);
-        return mapper.selectPersonJoinDevices(id);
+//        return mapper.selectPersonWithDevices(id);         // use annotation
+
+        return mapper.selectPersonJoinDevices(id);  // use xml mapper
     }
 
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET, produces = "application/json")

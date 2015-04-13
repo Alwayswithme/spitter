@@ -1,6 +1,9 @@
 package com.springapp.mvc.config;
 
+import com.springapp.mvc.mapper.DeviceMapper;
+import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,6 +31,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @MapperScan("com.springapp.mvc.mapper")
 @EnableWebMvc
 @EnableTransactionManagement
+@Log4j
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
@@ -48,17 +52,16 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactory() {
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource());
-        sqlSessionFactory.setFailFast(true);
         sqlSessionFactory.setTypeAliasesPackage("com.springapp.mvc.model");
-        return sqlSessionFactory;
+        return sqlSessionFactory.getObject();
     }
 
     @Bean
     public SqlSession sqlSession() throws Exception {
-        return new SqlSessionTemplate(sqlSessionFactory().getObject());
+        return new SqlSessionTemplate(sqlSessionFactory());
     }
 
     @Bean
@@ -72,5 +75,10 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         return resolver;
+    }
+
+    @Bean
+    public DeviceMapper userMapper() throws Exception {
+        return sqlSession().getMapper(DeviceMapper.class);
     }
 }

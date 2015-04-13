@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * @author phoenix
  */
+@CacheNamespace(readWrite = false)
 public interface PersonMapper {
     @Select("SELECT * FROM Person")
     List<Person> selectAll();
@@ -36,10 +37,10 @@ public interface PersonMapper {
             "VALUES (#{name}, #{age})"
     })
     @Options(useGeneratedKeys = true, keyProperty="id")
-    int insertPerson(Person person);
+    Integer insertPerson(Person person);
 
     @Delete("DELETE FROM Person WHERE id = #{id}")
-    int deleteById(int id);
+    Integer deleteById(Integer id);
 
     @Select({
             "SELECT *",
@@ -53,7 +54,7 @@ public interface PersonMapper {
     @Results({
             @Result(property = "devices", column = "id", many = @Many(select = "com.springapp.mvc.mapper.DeviceMapper.selectDevicesByOwner")),
     })
-    Person selectPersonWithDevices(int id);
+    Person selectPersonWithDevices(Integer id);
 
-    Person selectPersonJoinDevices(int id);
+    Person selectPersonJoinDevices(Integer id);
 }
