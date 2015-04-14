@@ -1,7 +1,9 @@
 package com.springapp.mvc.mapper;
 
 import com.springapp.mvc.model.Person;
+import com.springapp.mvc.provider.PersonProvider;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 import java.util.Map;
@@ -57,4 +59,7 @@ public interface PersonMapper {
     Person selectPersonWithDevices(Integer id);
 
     Person selectPersonJoinDevices(Integer id);
+
+    @SelectProvider(type = PersonProvider.class, method = "personAgeRange")
+    List<Person> personAgeGreatThan(Map<String, String> param, RowBounds rowBounds);
 }

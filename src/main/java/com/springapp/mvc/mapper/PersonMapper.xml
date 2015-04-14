@@ -10,6 +10,7 @@
     <result property="name" column="name"/>
     <result property="age" column="age"/>
   </resultMap>
+
   <resultMap id="personJoinDevices" type="person">
     <id property="id" column="id"/>
     <result property="name" column="name"/>
@@ -21,6 +22,7 @@
       <!--<association property="owner" resultMap="person"/>-->
     </collection>
   </resultMap>
+
   <select id="selectPersonJoinDevices" parameterType="int" resultMap="personJoinDevices">
     SELECT p.*,
     d.id AS device_id,

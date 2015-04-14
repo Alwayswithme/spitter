@@ -2,6 +2,7 @@ package com.springapp.mvc;
 
 import com.springapp.mvc.mapper.PersonMapper;
 import com.springapp.mvc.model.Person;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,5 +85,21 @@ public class PersonController {
     public @ResponseBody List<Person> selectByIds(@RequestParam(value = "ids") String ids) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         return mapper.selectSpecificIds(ids);
+    }
+
+    @RequestMapping(value = "ageRange", method = RequestMethod.GET)
+    public @ResponseBody List<Person> age(@RequestParam Map<String, String> params,
+                                          @RequestParam(required = false) Integer limit,
+                                          @RequestParam(required = false) Integer offset) {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        RowBounds rowBounds = RowBounds.DEFAULT;
+        if (params.containsKey("limit") && params.containsKey("offset")) {
+            rowBounds = new RowBounds(offset, limit);
+        } else if (params.containsKey("offset")) {
+            rowBounds = new RowBounds(offset, RowBounds.NO_ROW_LIMIT);
+        } else if (params.containsKey("limit")) {
+            rowBounds = new RowBounds(RowBounds.NO_ROW_OFFSET, limit);
+        }
+        return mapper.personAgeGreatThan(params, rowBounds);
     }
 }
