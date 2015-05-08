@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="spitter">
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
+
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css"/>
+    <title>Spitter</title>
+</head>
+<body ng-controller="person">
+    <div class="page-header">
+        <h1>Hello {{author || 'Angular'}}</h1>
+        {{person}}
+    </div>
+    <div class="page-header">
+        <h1>Person</h1>
+    </div>
+    <div class="col-lg-10">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="person in people">
+                <td>{{$index}}</td>
+                <td>{{person.name}}</td>
+                <td>{{person.age}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap-3.3.4-dist/js/jquery.min.js"></script>
+    <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+
+    <!-- Angular Js -->
+    <script src="bootstrap-3.3.4-dist/js/angular.min.js"></script>
+    <script src="spitter.js"></script>
+</body>
+</html>
