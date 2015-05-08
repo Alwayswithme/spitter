@@ -1,6 +1,7 @@
 package com.springapp.mvc.config;
 
 import com.springapp.mvc.mapper.DeviceMapper;
+import com.springapp.mvc.mapper.PersonMapper;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,6 +10,10 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +31,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  * @author phoenix
  */
 @Configuration
+@MapperScan(value = "com.springapp.mvc.mapper", nameGenerator = DefaultBeanNameGenerator.class)
 @PropertySource(value = "classpath:database/db.properties")
 @ComponentScan("com.springapp.mvc")
-@MapperScan("com.springapp.mvc.mapper")
 @EnableWebMvc
 @EnableTransactionManagement
 @Log4j
+@EnableCaching
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
@@ -78,7 +84,18 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public DeviceMapper userMapper() throws Exception {
+    public DeviceMapper deviceMapper() throws Exception {
         return sqlSession().getMapper(DeviceMapper.class);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("person", "device");
+    }
+    
+    @Bean
+    public PersonMapper personMapper() throws Exception {
+        SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
+        return sessionTemplate.getMapper(PersonMapper.class);
     }
 }
