@@ -1,7 +1,5 @@
 package com.springapp.mvc.config;
 
-import com.springapp.mvc.mapper.DeviceMapper;
-import com.springapp.mvc.mapper.PersonMapper;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,10 +20,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
@@ -86,19 +81,8 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public DeviceMapper deviceMapper() throws Exception {
-        return sqlSession().getMapper(DeviceMapper.class);
-    }
-
-    @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager("person", "device");
-    }
-    
-    @Bean
-    public PersonMapper personMapper() throws Exception {
-        SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
-        return sessionTemplate.getMapper(PersonMapper.class);
     }
 
     // equivalent for <mvc:default-servlet-handler/> tag
@@ -111,5 +95,10 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/static/index.html");
     }
 }

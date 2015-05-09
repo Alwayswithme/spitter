@@ -1,6 +1,7 @@
 package com.springapp.mvc;
 
 import com.springapp.mvc.config.DispatcherConfig;
+import com.springapp.mvc.controler.PersonController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,8 +34,9 @@ public class AppTests {
 
     @Test
     public void simple() throws Exception {
-        mockMvc.perform(get("/welcome"))
+        mockMvc.perform(get("/person/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+                .andExpect(handler().handlerType(PersonController.class))
+                .andExpect(handler().methodName("selectPersonAsMaps"));
     }
 }

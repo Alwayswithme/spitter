@@ -18,8 +18,8 @@ public class SpitterInitializer implements WebApplicationInitializer {
 //        appContext.setConfigLocation("/WEB-INF/mvc-dispatcher-servlet.xml");
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(DispatcherConfig.class);
-        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("mvc-dispatcher", new DispatcherServlet(appContext));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
+        ServletRegistration.Dynamic dynamic = servletContext.addServlet("mvc-dynamic", new DispatcherServlet(appContext));
+        dynamic.setLoadOnStartup(1);
+        dynamic.addMapping("/");
     }
 }
