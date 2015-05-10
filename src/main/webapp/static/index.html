@@ -8,39 +8,70 @@
     <title>Spitter</title>
 </head>
 <body ng-controller="person">
-    <div class="page-header">
-        <h1>Hello {{author || 'Angular'}}</h1>
-        {{person}}
-    </div>
-    <button class="btn btn-sm btn-default">Refresh</button>
-    <div class="row">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h2 class="panel-title">Person</h2>
-            </div>
-            <div class="panel-body">
-                <div class="col-lg-10">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="person in people">
-                            <td>{{$index}}</td>
-                            <td>{{person.name}}</td>
-                            <td>{{person.age}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="container">
+        <div class="page-header">
+            <h1>Hello {{'Angular'}}</h1>
+        </div>
+        <div class="row">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Person</h2>
+                </div>
+                <div class="panel-group">
+                    <button class="btn btn-sm btn-default" ng-click="refresh()">Refresh</button>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-10">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="p in people">
+                                <td>{{$index}}</td>
+                                <td>{{p.name}}</td>
+                                <td>{{p.age}}</td>
+                                <td><button class="btn btn-xs btn-danger" type="submit" ng-model="p" ng-click="delete(p)">Delete</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+        
+        
+        <form ng-submit="insert()" style="width: 50%" class="form-horizontal">
+            <div class="dropdown-header">
+                <h3 class="h3">Insert Person Here!</h3>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Name</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="What's the person name?" required autofocus ng-model="newPerson.name">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-md-2 control-label">Age</label>
+                <div class="col-md-6">
+                    <input type="number" class="form-control" placeholder="How old is the guy?" max="130" min="0" required ng-model="newPerson.age">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-md-2 control-label"> </label>
+                <div class="col-md-6">
+                    <input class="btn btn-primary" type="submit" value="Add new Person"/>
+                </div>
+            </div>
+        </form>
     </div>
-
 
 
     <!-- Bootstrap core JavaScript

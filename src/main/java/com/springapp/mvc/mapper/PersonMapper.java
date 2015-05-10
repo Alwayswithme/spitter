@@ -38,8 +38,8 @@ public interface PersonMapper {
             "(name, age)",
             "VALUES (#{name}, #{age})"
     })
-    @Options(useGeneratedKeys = true, keyProperty="id")
-    Integer insertPerson(Person person);
+    @Options(useGeneratedKeys = true, keyProperty="id", flushCache = true)
+    Integer insertPerson(Person person);  // Note: once use Options, the default behavior of flushCache will be false
 
     @Delete("DELETE FROM Person WHERE id = #{id}")
     Integer deleteById(Integer id);

@@ -5,12 +5,14 @@ import com.springapp.mvc.model.Person;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ import java.util.Map;
  * @author phoenix
  */
 @RestController
-@RequestMapping("/person")
+@RequestMapping(value = "/person")
 public class PersonController {
 
     @Autowired
@@ -62,10 +64,9 @@ public class PersonController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    @RequestMapping(value = "insert", method = RequestMethod.GET, produces = "application/json")
-    public Person insert(@RequestParam String name, @RequestParam int age) throws IOException {
+    @RequestMapping(value = "insert", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    public Person insert(@RequestBody Person person) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        Person person = new Person(name, age);
         mapper.insertPerson(person);
 
         return person;
@@ -76,7 +77,7 @@ public class PersonController {
     public int deleteOne(@PathVariable int id) throws IOException {
         int row = sqlSession.delete("com.springapp.mvc.mapper.PersonMapper.deleteById", id);
         // manually rollback
-        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return row;
     }
 
@@ -100,5 +101,14 @@ public class PersonController {
             rowBounds = new RowBounds(RowBounds.NO_ROW_OFFSET, limit);
         }
         return mapper.personAgeGreatThan(params, rowBounds);
+    }
+    
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, Object> handleDataIntegrityException(DataIntegrityViolationException e) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", HttpStatus.CONFLICT.getReasonPhrase());
+        map.put("errMsg", e.getMessage());
+        return map;
     }
 }

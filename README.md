@@ -7,3 +7,6 @@ A toy project I use to messing thing up.
 * MyBatis
 * MariaDB
 * Lombok
+* AngularJs
+* Bootstrap
+* JQuery

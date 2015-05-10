@@ -1,6 +1,5 @@
 package com.springapp.mvc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ import java.util.List;
 @Data
 @Alias("person")
 public class Person implements Serializable {
-    @JsonIgnore
     private Integer id;      // when return person as json this field will be ignoring
 
     @NonNull private String name;

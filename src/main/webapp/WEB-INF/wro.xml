@@ -7,6 +7,7 @@
   </group>
   <group name="bootstrap">
     <css>webjar:bootstrap/3.3.4/css/bootstrap.min.css</css>
+    <css>webjar:bootstrap/3.3.4/css/bootstrap-theme.min.css</css>
     <js>webjar:bootstrap/3.3.4/js/bootstrap.js</js>
   </group>
 </groups>
