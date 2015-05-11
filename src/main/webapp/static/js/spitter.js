@@ -32,5 +32,5 @@ angular.module('spitter', [])
                 console.log(data);
                 console.log(status);
             });
-        }
+        };
     });

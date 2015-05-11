@@ -23,12 +23,14 @@
 # INSERT INTO spitter.House (owner_id, size, location) VALUES (3, 'LARGE', 'beach');
 # # INSERT INTO spitter.House (owner_id, size, location) VALUES (2, 'MEDIUM', 'beach');
 
+DROP TABLE Device;
+
 CREATE TABLE IF NOT EXISTS Device (
   `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `owner_id` INT(11),
   `name` VARCHAR(20) NOT NULL,
   `type` VARCHAR(10) NOT NULL,
-  FOREIGN KEY (owner_id) REFERENCES Person(id)
+  FOREIGN KEY (owner_id) REFERENCES Person(id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 

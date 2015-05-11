@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap.css"/>
-    
+
+    <link rel="stylesheet" href="css/spitter.css"/>
     <title>Spitter</title>
 </head>
 <body ng-controller="person">
+        
+    <div class="col-md-2 sidebar">
+        <ul class="nav">
+            <li>
+                <a href="#">Sidebar One</a>
+            </li>
+            <li>
+                <a href="#">Sidebar Two</a>
+            </li>
+            <li>
+                <a href="#">Sidebar Three</a>
+            </li>
+        </ul>
+    </div>
     <div class="container">
         <div class="page-header">
             <h1>Hello {{'Angular'}}</h1>
         </div>
         <div class="row">
+  
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Person</h2>
@@ -46,27 +62,26 @@
         </div>
         
         
-        <form ng-submit="insert()" style="width: 50%" class="form-horizontal">
-            <div class="dropdown-header">
+        <form ng-submit="insert()" class="form-horizontal">
+            <div class="dropdown-header col-sm-offset-2">
                 <h3 class="h3">Insert Person Here!</h3>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Name</label>
-                <div class="col-md-6">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-4">
                     <input type="text" class="form-control" placeholder="What's the person name?" required autofocus ng-model="newPerson.name">
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-md-2 control-label">Age</label>
-                <div class="col-md-6">
+                <label class="col-sm-2 control-label">Age</label>
+                <div class="col-sm-4">
                     <input type="number" class="form-control" placeholder="How old is the guy?" max="130" min="0" required ng-model="newPerson.age">
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-md-2 control-label"> </label>
-                <div class="col-md-6">
+                <div class="col-sm-offset-2 col-sm-4">
                     <input class="btn btn-primary" type="submit" value="Add new Person"/>
                 </div>
             </div>

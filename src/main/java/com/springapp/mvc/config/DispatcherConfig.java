@@ -27,12 +27,12 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 /**
  * @author phoenix
  */
-@ComponentScan("com.springapp.mvc")
 @EnableWebMvc
 @EnableTransactionManagement
 @Log4j
 @EnableCaching
 @Configuration
+@ComponentScan("com.springapp.mvc")
 @MapperScan(value = "com.springapp.mvc.mapper")
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
