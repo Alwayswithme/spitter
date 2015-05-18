@@ -1,8 +1,10 @@
 /**
  * Created by phoenix on 5/9/15.
  */
-angular.module('spitter', [])
-    .controller('person', function($scope, $http) {
+var spitter = angular.module('spitter', []);
+
+spitter.controller('person', function($scope, $http) {
+        $scope.author = "Phoenix";
         $scope.insert = function() {
             $scope.people.push($scope.newPerson);
             var future = $http.post('/person/insert', $scope.newPerson);
