@@ -42,16 +42,14 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Age</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="p in people | filter: keyword">
-                                <td>{{$index}}</td>
-                                <td>{{p.id}}</td>
+                            <tr ng-repeat="p in people | filter:searchFilter">
+                                <td>{{$index + 1}}</td>
                                 <td>{{p.name}}</td>
                                 <td>{{p.age}}</td>
                                 <td><button class="btn btn-xs btn-danger" type="submit" ng-model="p" ng-click="delete(p)">Delete</button></td>

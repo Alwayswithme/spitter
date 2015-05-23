@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="diy">
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <title>Spitter</title>
+</head>
+<body ng-controller="hardware as ctrl">
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <th>#</th><th>Components</th><th>Brand & Model</th><th>Price</th><th>Quantity</th><th>Cost</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{$index + 1}}<button class="btn btn-xs btn-danger" ng-model="p" ng-click="removeItem($index)">Delete</button></td>
+                    <td>{{item.component}}</td>
+                    <td>{{item.brandModel}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td ng-init="itemTotal = item.price * item.quantity; ctrl.total = ctrl.total + itemTotal">{{itemTotal}}</td>
+                </tr>
+                <!-- Total cost -->
+                <tr>
+                    <td align="right" colspan="5">Total Cost:</td>
+                    <td align="right">{{ctrl.total}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form class="form-inline" role="form" ng-submit="addItem(model)">
+            <div class="input-group">
+                <div class="input-group-btn btn-group">
+                    <button type="button" class="btn btn-default">{{component}}</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="component in hardware.components" ng-click="setComponent($index)">
+                            <a>{{component}}</a>
+                        </li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input type="text" class="form-control" ng-model="model.brandModel" placeholder="B" required autofocus aria-label="...">
+            </div><!-- /input-group -->
+            <div class="form-group">
+                <input type="number" class="form-control" ng-model="model.quantity" placeholder="Quantity" max="130" min="1" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" ng-model="model.price" placeholder="Price" min="1" max="99999999" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Add!</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="page-header">
+            <h3>Debug</h3>
+        </div>
+        <pre class="alert alert-info">{{ model | json }}</pre>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Angular Js -->
+    <script src="js/angular.js"></script>
+    <script src="js/test.js"></script>
+</body>
+</html>
