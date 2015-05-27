@@ -3,29 +3,34 @@
  */
 var diy = angular.module('diy', []);
 
-diy.controller('hardware', function ($scope, $http) {
+diy.controller('hardware', function ($scope, $http,  $locale) {
+    // initialize
     var ctrl = this;
-    ctrl.total = 0;
     $scope.initModel = function() {
         $scope.model = {};
         $scope.component = "Select Component";
     };
-    
+    $scope.initModel();
     $scope.items = [];
-
-
-    
     $scope.hardware = {};
     $scope.hardware.components = [
-        "Processor", "Memory", "Disk", "BaseBoard"
+        "Processor", "Cooling", "BaseBoard", "Memory",
+        "Disk", "Graphics",  "Case", "PSU",
+        "Monitor", "Keyboard", "Mouse"
     ];
 
+    $scope.model.local = $locale;
+    // function
     $scope.setComponent = function(index) {
         if ($scope.model == undefined) {
             $scope.model = {};
         }
         $scope.model.component = $scope.hardware.components[index];
         $scope.component = $scope.model.component;
+    };
+
+    $scope.resetComponent = function() {
+        $scope.initModel();
     };
 
     $scope.addItem = function(item) {
@@ -37,8 +42,39 @@ diy.controller('hardware', function ($scope, $http) {
     };
 
     $scope.removeItem = function(index) {
-        $scope.items.remove(index);
+        $scope.model.index = index;
+        $scope.items.splice(index, 1);
     };
 
-    $scope.initModel();
+    this.clearPlan = function() {
+        $scope.items.length = 0;
+    };
+
+    this.savePlan = function() {
+        if (this.planName) {
+            this.planName = '';
+        }
+        $scope.items.length = 0;
+    };
+
+    this.getTotalCost = function() {
+        return $scope.items.map(function(item){
+            return item.price * item.quantity;
+        }).reduce(function(a, b){
+            return a + b;
+        }, 0);
+    };
+
+    this.print = function() {
+        var title = "Componets    Brand Model    Quantity\n";
+        var all = "";
+        itemStrs = $scope.items.map(function(item){
+            return item.component + ":   " + item.brandModel + "    " + item.quantity + "\n";
+        });
+        itemStrs.forEach(function(str) {
+           all += str;
+        });
+
+        return title + all;
+    }
 });
