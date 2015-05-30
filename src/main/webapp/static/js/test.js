@@ -37,7 +37,7 @@ diy.controller('hardware', function ($scope, $http,  $locale) {
         if ($scope.hardware.components.indexOf($scope.component) > -1) {
             item.component = $scope.component;
             $scope.items.push(item);
-            $scope.initModel();            
+            $scope.initModel();
         }
     };
 
