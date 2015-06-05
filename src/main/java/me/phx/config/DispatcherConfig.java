@@ -1,6 +1,7 @@
 package me.phx.config;
 
 import lombok.extern.log4j.Log4j;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -14,6 +15,7 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -33,7 +35,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableCaching
 @Configuration
 @ComponentScan("me.phx")
-@MapperScan(value = "me.phx.mybatis.mapper")
+@MapperScan("me.phx.mybatis.mapper")
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     @Bean
@@ -67,17 +69,23 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setTypeAliasesPackage("com.springapp.mvc.model");
+        sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
 //        Resource[] mapperLocations = new Resource[] {
-//                new ClassPathResource("com/springapp/mvc/mapper/PersonMapper.xml")
+//                new ClassPathResource("me/phx/mybatis/mapper/PersonMapper.xml")
 //        };
 //        sqlSessionFactory.setMapperLocations(mapperLocations);
         return sqlSessionFactory.getObject();
     }
 
+    @Primary
     @Bean
     public SqlSession sqlSession(SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
+    @Bean
+    public SqlSession batchSqlSession(SqlSessionFactory sqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
     }
 
     @Bean

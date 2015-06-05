@@ -24,7 +24,7 @@ public class MyBatisMain {
             DeviceMapper mapper = sqlSession.getMapper(DeviceMapper.class);
             PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
 
-            Person p = personMapper.selectOne(2);
+            Person p = personMapper.selectPersonById(2);
             List<Device> l = mapper.selectDevicesByIds(1);
             Device d = l.get(0);
             d.setName("iPhone 6");

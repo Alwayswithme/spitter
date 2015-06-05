@@ -5,6 +5,7 @@ import me.phx.model.Person;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Propagation;
@@ -75,10 +76,12 @@ public class PersonController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "deleteById/{id}", method = RequestMethod.GET)
     public int deleteOne(@PathVariable int id) throws IOException {
-        int row = sqlSession.delete("PersonMapper.deleteById", id);
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+        mapper.deleteById(id);
+
         // manually rollback
 //        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        return row;
+        return mapper.deleteById(id);
     }
 
     @RequestMapping(value = "selectByIds", method = RequestMethod.GET)

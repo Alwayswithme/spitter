@@ -19,11 +19,13 @@ public class SimpleDeviceRepository implements DeviceRepository {
     @Autowired
     private SqlSession sqlSession;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
     @Override
     @Cacheable("device")
     public List<Device> getByOwnerId(Integer id) {
         simulateSlowService();
-        return sqlSession.getMapper(DeviceMapper.class).selectDevicesByOwner(id);
+        return deviceMapper.selectDevicesByOwner(id);
     }
 
     // Don't do this at home

@@ -18,7 +18,7 @@ public interface PersonMapper {
 
     @Select({"SELECT * FROM Person",
             "WHERE id = #{id}"})
-    Person selectOne(int id);
+    Person selectPersonById(int id);
 
     @Select({ "SELECT * FROM Person"})
     @MapKey("id")
@@ -54,7 +54,7 @@ public interface PersonMapper {
     @Select({"SELECT * FROM Person",
             "WHERE id = #{id}"})
     @Results({
-            @Result(property = "devices", column = "id", many = @Many(select = "DeviceMapper.selectDevicesByOwner")),
+            @Result(property = "devices", column = "id", many = @Many(select = "me.phx.mybatis.mapper.DeviceMapper.selectDevicesByOwner")),
     })
     Person selectPersonWithDevices(Integer id);
 

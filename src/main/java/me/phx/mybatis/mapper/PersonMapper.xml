@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.springapp.mvc.mybatis.mapper.PersonMapper">
+<mapper namespace="me.phx.mybatis.mapper.PersonMapper">
 
   <resultMap id="person" type="person">
     <id property="id" column="id"/>

@@ -16,7 +16,7 @@ public interface DeviceMapper {
             "WHERE FIND_IN_SET(id, #{ids})"
             })
     @Results({
-        @Result(property = "owner", column = "owner_id", one = @One(select = "PersonMapper.selectOne"))
+        @Result(property = "owner", column = "owner_id", one = @One(select = "me.phx.mybatis.mapper.PersonMapper.selectPersonById"))
     })
     List<Device> selectDevicesByIds(int ids);
 

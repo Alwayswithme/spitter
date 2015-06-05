@@ -19,7 +19,7 @@ public interface HouseMapper {
 
     @Select("SELECT * FROM House ORDER BY id")
     @Results({
-            @Result(property = "owner", column = "owner_id", one = @One(select = "PersonMapper.selectOne")),
+            @Result(property = "owner", column = "owner_id", one = @One(select = "me.phx.mybatis.mapper.PersonMapper.selectPersonById")),
     })
     List<House> selectHouse();
 }
