@@ -1,4 +1,4 @@
-package com.springapp.mvc.provider;
+package me.phx.mybatis.provider;
 
 
 import org.apache.ibatis.jdbc.SQL;

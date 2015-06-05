@@ -1,6 +1,6 @@
-package com.springapp.mvc.mapper;
+package me.phx.mybatis.mapper;
 
-import com.springapp.mvc.model.House;
+import me.phx.model.House;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface HouseMapper {
 
     @Select("SELECT * FROM House ORDER BY id")
     @Results({
-            @Result(property = "owner", column = "owner_id", one = @One(select = "com.springapp.mvc.mapper.PersonMapper.selectOne")),
+            @Result(property = "owner", column = "owner_id", one = @One(select = "PersonMapper.selectOne")),
     })
     List<House> selectHouse();
 }

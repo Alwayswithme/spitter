@@ -1,7 +1,7 @@
-package com.springapp.mvc.controler;
+package me.phx.controler;
 
-import com.springapp.mvc.mapper.PersonMapper;
-import com.springapp.mvc.model.Person;
+import me.phx.mybatis.mapper.PersonMapper;
+import me.phx.model.Person;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +28,10 @@ public class PersonController {
 
     @RequestMapping(value = "selectAll", method = RequestMethod.GET, produces = "application/json")
     public List<Person> selectAll() throws IOException {
-        return sqlSession.selectList("com.springapp.mvc.mapper.PersonMapper.selectAll");
+        return sqlSession.selectList("PersonMapper.selectAll");
     }
 
-    @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET)
     public Person selectPersonWithDevices(@PathVariable int id) {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
 //        return mapper.selectPersonWithDevices(id);         // use annotation
@@ -39,19 +39,19 @@ public class PersonController {
         return mapper.selectPersonJoinDevices(id);  // use xml mapper
     }
 
-    @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         return mapper.selectPersonAsMapById();
 
 //        one-liner
-//        return sqlSession.selectMap("com.springapp.mvc.mapper.PersonMapper.selectAll", "age");
+//        return sqlSession.selectMap("PersonMapper.selectAll", "age");
     }
 
     /**
      * type-safe and more readable way
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Map<String,Object>> selectPersonAsMaps() throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         return mapper.selectPersonAsMaps();
@@ -64,7 +64,7 @@ public class PersonController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    @RequestMapping(value = "insert", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @RequestMapping(value = "insert", method = RequestMethod.POST, consumes = "application/json")
     public Person insert(@RequestBody Person person) throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         mapper.insertPerson(person);
@@ -75,7 +75,7 @@ public class PersonController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "deleteById/{id}", method = RequestMethod.GET)
     public int deleteOne(@PathVariable int id) throws IOException {
-        int row = sqlSession.delete("com.springapp.mvc.mapper.PersonMapper.deleteById", id);
+        int row = sqlSession.delete("PersonMapper.deleteById", id);
         // manually rollback
 //        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return row;

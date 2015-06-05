@@ -1,7 +1,7 @@
-package com.springapp.mvc;
+package me.phx;
 
-import com.springapp.mvc.config.DispatcherConfig;
-import com.springapp.mvc.controler.PersonController;
+import me.phx.config.DispatcherConfig;
+import me.phx.controler.PersonController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

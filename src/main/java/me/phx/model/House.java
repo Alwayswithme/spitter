@@ -1,4 +1,4 @@
-package com.springapp.mvc.model;
+package me.phx.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

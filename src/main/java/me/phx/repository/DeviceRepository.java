@@ -1,6 +1,6 @@
-package com.springapp.mvc.repository;
+package me.phx.repository;
 
-import com.springapp.mvc.model.Device;
+import me.phx.model.Device;
 
 import java.util.List;
 

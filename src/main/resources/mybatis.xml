@@ -6,7 +6,7 @@
     <properties resource="database/db.properties">
     </properties>
     <typeAliases>
-        <package name="com.springapp.mvc.model"/>
+        <package name="me.phx.model"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -20,6 +20,6 @@
         </environment>
     </environments>
     <mappers>
-        <package name="com.springapp.mvc.mapper"/>
+        <package name="me.phx.mybatis.mapper"/>
     </mappers>
 </configuration>

@@ -1,7 +1,7 @@
-import com.springapp.mvc.mapper.DeviceMapper;
-import com.springapp.mvc.mapper.PersonMapper;
-import com.springapp.mvc.model.Device;
-import com.springapp.mvc.model.Person;
+import me.phx.mybatis.mapper.DeviceMapper;
+import me.phx.mybatis.mapper.PersonMapper;
+import me.phx.model.Device;
+import me.phx.model.Person;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -23,7 +23,7 @@ public class MyBatisMain {
         try (SqlSession sqlSession = ssFactory.openSession()) {
             DeviceMapper mapper = sqlSession.getMapper(DeviceMapper.class);
             PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
-            
+
             Person p = personMapper.selectOne(2);
             List<Device> l = mapper.selectDevicesByIds(1);
             Device d = l.get(0);

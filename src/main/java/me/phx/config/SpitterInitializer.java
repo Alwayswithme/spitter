@@ -1,4 +1,4 @@
-package com.springapp.mvc.config;
+package me.phx.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

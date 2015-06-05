@@ -1,6 +1,6 @@
-package com.springapp.mvc.mapper;
+package me.phx.mybatis.mapper;
 
-import com.springapp.mvc.model.Device;
+import me.phx.model.Device;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface DeviceMapper {
             "WHERE FIND_IN_SET(id, #{ids})"
             })
     @Results({
-        @Result(property = "owner", column = "owner_id", one = @One(select = "com.springapp.mvc.mapper.PersonMapper.selectOne"))
+        @Result(property = "owner", column = "owner_id", one = @One(select = "PersonMapper.selectOne"))
     })
     List<Device> selectDevicesByIds(int ids);
 

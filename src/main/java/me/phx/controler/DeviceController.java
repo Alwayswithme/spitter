@@ -1,7 +1,7 @@
-package com.springapp.mvc.controler;
+package me.phx.controler;
 
-import com.springapp.mvc.model.Device;
-import com.springapp.mvc.repository.DeviceRepository;
+import me.phx.model.Device;
+import me.phx.repository.DeviceRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +23,7 @@ public class DeviceController {
     @Autowired
     private DeviceRepository deviceRepository;
 
-
-    @RequestMapping(value = "selectDevicesByOwner", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "selectDevicesByOwner", method = RequestMethod.GET)
     public List<Device> selectDevicesByOwner(@RequestParam(value = "id") Integer ownerId) throws IOException {
         log.info(".... Fetching devices");
         List<Device> devices = deviceRepository.getByOwnerId(ownerId);

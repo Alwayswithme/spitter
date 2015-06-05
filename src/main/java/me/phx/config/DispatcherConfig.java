@@ -1,4 +1,4 @@
-package com.springapp.mvc.config;
+package me.phx.config;
 
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.session.SqlSession;
@@ -32,8 +32,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Log4j
 @EnableCaching
 @Configuration
-@ComponentScan("com.springapp.mvc")
-@MapperScan(value = "com.springapp.mvc.mapper")
+@ComponentScan("me.phx")
+@MapperScan(value = "me.phx.mybatis.mapper")
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     @Bean

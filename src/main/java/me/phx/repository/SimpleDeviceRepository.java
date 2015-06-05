@@ -1,7 +1,7 @@
-package com.springapp.mvc.repository;
+package me.phx.repository;
 
-import com.springapp.mvc.mapper.DeviceMapper;
-import com.springapp.mvc.model.Device;
+import me.phx.mybatis.mapper.DeviceMapper;
+import me.phx.model.Device;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,7 +19,6 @@ public class SimpleDeviceRepository implements DeviceRepository {
     @Autowired
     private SqlSession sqlSession;
 
-    
     @Override
     @Cacheable("device")
     public List<Device> getByOwnerId(Integer id) {

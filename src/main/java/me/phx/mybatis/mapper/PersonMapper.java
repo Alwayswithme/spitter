@@ -1,7 +1,7 @@
-package com.springapp.mvc.mapper;
+package me.phx.mybatis.mapper;
 
-import com.springapp.mvc.model.Person;
-import com.springapp.mvc.provider.PersonProvider;
+import me.phx.model.Person;
+import me.phx.mybatis.provider.PersonProvider;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
@@ -54,7 +54,7 @@ public interface PersonMapper {
     @Select({"SELECT * FROM Person",
             "WHERE id = #{id}"})
     @Results({
-            @Result(property = "devices", column = "id", many = @Many(select = "com.springapp.mvc.mapper.DeviceMapper.selectDevicesByOwner")),
+            @Result(property = "devices", column = "id", many = @Many(select = "DeviceMapper.selectDevicesByOwner")),
     })
     Person selectPersonWithDevices(Integer id);
 
