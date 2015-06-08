@@ -11,4 +11,7 @@
     <css>webjar:bootstrap/3.3.4/css/bootstrap-theme.min.css</css>
     <js>webjar:bootstrap/3.3.4/js/bootstrap.js</js>
   </group>
+  <group name="react">
+    <js>webjar:react/0.13.3/react.min.js</js>
+  </group>
 </groups>
