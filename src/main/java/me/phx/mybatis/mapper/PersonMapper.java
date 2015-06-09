@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * @author phoenix
  */
-@CacheNamespace(readWrite = false)
 public interface PersonMapper {
     @Select("SELECT * FROM Person")
     List<Person> selectAll();
@@ -25,8 +24,8 @@ public interface PersonMapper {
     Map<Integer, Person> selectPersonAsMapById();
 
     @Select({
-            "SELECT *",
-            "FROM Person"
+            "SELECT p.name as personName, p.age as personAge",
+            "FROM Person p"
     })
     List<Map<String,Object>> selectPersonAsMaps();
 

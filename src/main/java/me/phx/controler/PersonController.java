@@ -29,7 +29,7 @@ public class PersonController {
 
     @RequestMapping(value = "selectAll", method = RequestMethod.GET, produces = "application/json")
     public List<Person> selectAll() throws IOException {
-        return sqlSession.selectList("PersonMapper.selectAll");
+        return sqlSession.selectList("me.phx.mybatis.mapper.PersonMapper.selectAll");
     }
 
     @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET)
@@ -40,6 +40,15 @@ public class PersonController {
         return mapper.selectPersonJoinDevices(id);  // use xml mapper
     }
 
+    @RequestMapping(value = "selectAndModifyById/{id}", method = RequestMethod.GET)
+    public Person selectAndModifyById(@PathVariable int id) {
+        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+//        return mapper.selectPersonWithDevices(id);         // use annotation
+
+        Person p = mapper.selectPersonJoinDevices(id);
+        p.setName("root2");
+        return p;  // use xml mapper
+    }
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);

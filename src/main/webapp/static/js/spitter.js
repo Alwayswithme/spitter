@@ -4,7 +4,7 @@
 var spitter = angular.module('spitter', []);
 
 spitter.controller('person', function ($scope, $http) {
-    $scope.author = "Phoenix";
+    $scope.author = "World";
     $scope.insert = function () {
         $scope.people.push($scope.newPerson);
         var future = $http.post('/person/insert', $scope.newPerson);
@@ -22,9 +22,27 @@ spitter.controller('person', function ($scope, $http) {
     $scope.refresh = function () {
         $http.get('/person/selectAll').success(function (data) {
             $scope.people = data;
+            $scope.model = data;
         });
     };
 
+    $scope.selectPersonMap = function () {
+        $http.get('/person/').success(function (data) {
+            $scope.model = data;
+        });
+    };
+
+    $scope.selectPersonJoinDevice = function () {
+        $http.get('/person/selectById/1').success(function (data) {
+            $scope.model = data;
+        });
+    };
+
+    $scope.selectPersonAndModify = function () {
+        $http.get('/person/selectAndModifyById/1').success(function (data) {
+            $scope.model = data;
+        });
+    };
     $scope.refresh();
 
     $scope.delete = function (person) {

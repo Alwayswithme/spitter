@@ -9,19 +9,6 @@
     <title>Spitter</title>
 </head>
 <body ng-controller="person as ctrl">
-    <div class="col-md-2 sidebar">
-        <ul class="nav">
-            <li>
-                <a href="#">Sidebar One</a>
-            </li>
-            <li>
-                <a href="#">Sidebar Two</a>
-            </li>
-            <li>
-                <a href="#">Sidebar Three</a>
-            </li>
-        </ul>
-    </div>
     <div class="container">
         <div class="page-header">
             <h1>Hello {{author || 'Angular' }}</h1>
@@ -34,7 +21,10 @@
                 </div>
                 <div class="panel-group">
                     <button class="btn btn-sm btn-default" ng-click="refresh()">Refresh</button>
-                    <div>Search:<input ng-model="keyword"/></div> 
+                    <button class="btn btn-sm btn-default" ng-click="selectPersonMap()">SelectPersonMap</button>
+                    <button class="btn btn-sm btn-default" ng-click="selectPersonJoinDevice()">selectPersonJoinDevice</button>
+                    <button class="btn btn-sm btn-default" ng-click="selectPersonAndModify()">selectPersonAndModify</button>
+                    <div>Search:<input ng-model="keyword"/></div>
                 </div>
                 <div class="panel-body">
                     <div class="col-lg-10">
@@ -103,6 +93,11 @@
             </div>
             </div>
         </div>
+
+        <div class="page-header">
+            <h3>Debug</h3>
+        </div>
+        <pre class="alert alert-warning">{{ model | json }}</pre>
     </div>
 
 

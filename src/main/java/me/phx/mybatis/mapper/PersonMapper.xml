@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.phx.mybatis.mapper.PersonMapper">
-
+  <cache readOnly="true"/>
   <resultMap id="person" type="person">
     <id property="id" column="id"/>
     <result property="name" column="name"/>
@@ -19,7 +19,7 @@
       <id property="id" column="device_id"/>
       <result property="name" column="device_name"/>
       <result property="type" column="device_type"/>
-      <!--<association property="owner" resultMap="person"/>-->
+      <association property="owner" resultMap="person"/>
     </collection>
   </resultMap>
 
