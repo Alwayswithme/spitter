@@ -27,7 +27,7 @@ public class PersonController {
     @Autowired
     private SqlSession sqlSession;
 
-    @RequestMapping(value = "selectAll", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "selectAll", method = RequestMethod.GET)
     public List<Person> selectAll() throws IOException {
         return sqlSession.selectList("me.phx.mybatis.mapper.PersonMapper.selectAll");
     }
@@ -43,11 +43,9 @@ public class PersonController {
     @RequestMapping(value = "selectAndModifyById/{id}", method = RequestMethod.GET)
     public Person selectAndModifyById(@PathVariable int id) {
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-//        return mapper.selectPersonWithDevices(id);         // use annotation
-
         Person p = mapper.selectPersonJoinDevices(id);
         p.setName("root2");
-        return p;  // use xml mapper
+        return p;
     }
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {

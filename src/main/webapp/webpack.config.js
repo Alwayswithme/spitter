@@ -1,12 +1,16 @@
 module.exports = {
-    entry: './static/jsx/app.jsx',
+    entry: './src/app.js',
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/static/build/js'
+        path: __dirname + '/build/'
     },
     module: {
         loaders: [
-            {test: /\.jsx$/, loader: 'jsx-loader?insertPragma=React.DOM&harmony'}
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+            }
         ]
     },
     resolve: {
