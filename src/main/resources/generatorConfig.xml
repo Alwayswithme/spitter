@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/home/ye/.m2/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar" />
+
+    <context id="MySQLTable" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost/spitter"
+                        userId="root"
+                        password="cloudSoft@Skybility">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="test.model" targetProject="src/main">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="test.xml"  targetProject="src/main">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="src/main">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <table schema="DB2ADMIN" tableName="Blog" domainObjectName="Blog" >
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>
