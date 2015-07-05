@@ -18,7 +18,6 @@ public class SimpleDeviceRepository implements DeviceRepository {
     @Autowired
     private DeviceMapper deviceMapper;
     @Override
-    @Cacheable("device")
     public List<Device> getByOwnerId(Integer id) {
         return deviceMapper.selectDevicesByOwner(id);
     }

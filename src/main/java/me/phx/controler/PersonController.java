@@ -43,6 +43,7 @@ public class PersonController {
     @RequestMapping(value = "selectAndModifyById/{id}", method = RequestMethod.GET)
     public Person selectAndModifyById(@PathVariable int id) {
         Person p = personMapper.selectPersonJoinDevices(id);
+        System.out.println(p.getName());
         p.setName("root2");
         return p;
     }

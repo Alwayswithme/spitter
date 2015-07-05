@@ -15,4 +15,6 @@ public interface HouseMapper {
     List<Map<String,Object>> selectHouseAsMaps();
 
     List<House> selectHouse();
+
+    int insertHouse(House house);
 }

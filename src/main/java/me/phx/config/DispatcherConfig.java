@@ -11,14 +11,8 @@ import org.springframework.web.servlet.config.annotation.*;
 /**
  * @author phoenix
  */
-@EnableWebMvc
-@EnableCaching
 @Configuration
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
-    @Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("person", "device");
-    }
 
     // equivalent for <mvc:default-servlet-handler/> tag
     @Override

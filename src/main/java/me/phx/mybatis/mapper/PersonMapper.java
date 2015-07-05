@@ -18,8 +18,6 @@ public interface PersonMapper {
     @Select("SELECT * FROM Person")
     List<Person> selectAll();
 
-    @Select({"SELECT * FROM Person",
-            "WHERE id = #{id}"})
     Person selectPersonById(int id);
 
     @Select({ "SELECT * FROM Person"})

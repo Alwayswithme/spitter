@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.phx.mybatis.mapper.HouseMapper">
-  <cache></cache>
+  <cache/>
 
   <resultMap id="houseWithOwner" type="house">
     <id property="id" column="id"/>
@@ -12,6 +12,10 @@
     <result property="location" column="location"/>
     <association property="owner" column="owner_id" javaType="person" select="me.phx.mybatis.mapper.PersonMapper.selectPersonById"/>
   </resultMap>
+
+  <insert id="insertHouse" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    INSERT INTO House (owner_id, size, location) VALUES (#{owner.id,jdbcType=NUMERIC}, #{size}, #{location})
+  </insert>
 
   <select id="selectHouseAsMaps" resultType="Map">
     select * FROM House

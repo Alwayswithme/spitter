@@ -1,5 +1,6 @@
 package me.phx.config;
 
+import me.phx.model.Device;
 import me.phx.model.DeviceType;
 import me.phx.model.HouseSize;
 import org.apache.ibatis.session.SqlSession;
@@ -26,16 +27,19 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         String resources = "mybatis-config.xml";
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setConfigLocation(new ClassPathResource(resources));
+//        sqlSessionFactory.setConfigLocation(new ClassPathResource(resources));
         sqlSessionFactory.setDataSource(dataSource);
-//        sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
-//        TypeHandler<DeviceType> typeEnumHandler = new EnumOrdinalTypeHandler<>(DeviceType.class);
-//        TypeHandler<HouseSize> sizeEnumHandler = new EnumOrdinalTypeHandler<>(HouseSize.class);
-//        TypeHandler<?>[] handlers = Arrays.asList(
-//                typeEnumHandler,
-//                sizeEnumHandler
-//        ).toArray(new TypeHandler<?>[]{});
+        sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
+        TypeHandler<DeviceType> typeEnumHandler = new EnumOrdinalTypeHandler<>(DeviceType.class);
+        TypeHandler<HouseSize> sizeEnumHandler = new EnumOrdinalTypeHandler<>(HouseSize.class);
+        TypeHandler<?>[] handlers = Arrays.asList(
+                typeEnumHandler,
+                sizeEnumHandler
+        ).toArray(new TypeHandler<?>[]{});
 //        sqlSessionFactory.setTypeHandlers(new TypeHandler[]{typeEnumHandler, sizeEnumHandler});
+        sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(DeviceType.class, typeEnumHandler);
+        sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(HouseSize.class, sizeEnumHandler);
+
 //        Resource[] mapperLocations = new Resource[] {
 //                new ClassPathResource("me/phx/mybatis/mapper/PersonMapper.xml")
 //        };
