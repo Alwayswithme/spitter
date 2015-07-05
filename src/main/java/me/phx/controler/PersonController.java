@@ -1,11 +1,10 @@
 package me.phx.controler;
 
-import me.phx.mybatis.mapper.PersonMapper;
 import me.phx.model.Person;
+import me.phx.mybatis.mapper.PersonMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,32 +24,31 @@ import java.util.Map;
 public class PersonController {
 
     @Autowired
+    PersonMapper personMapper;
+    @Autowired
     private SqlSession sqlSession;
 
     @RequestMapping(value = "selectAll", method = RequestMethod.GET)
     public List<Person> selectAll() throws IOException {
-        return sqlSession.selectList("me.phx.mybatis.mapper.PersonMapper.selectAll");
+        return personMapper.selectAll();
     }
 
     @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET)
     public Person selectPersonWithDevices(@PathVariable int id) {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
 //        return mapper.selectPersonWithDevices(id);         // use annotation
 
-        return mapper.selectPersonJoinDevices(id);  // use xml mapper
+        return personMapper.selectPersonJoinDevices(id);  // use xml mapper
     }
 
     @RequestMapping(value = "selectAndModifyById/{id}", method = RequestMethod.GET)
     public Person selectAndModifyById(@PathVariable int id) {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        Person p = mapper.selectPersonJoinDevices(id);
+        Person p = personMapper.selectPersonJoinDevices(id);
         p.setName("root2");
         return p;
     }
     @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        return mapper.selectPersonAsMapById();
+        return personMapper.selectPersonAsMapById();
 
 //        one-liner
 //        return sqlSession.selectMap("PersonMapper.selectAll", "age");
@@ -61,21 +59,18 @@ public class PersonController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Map<String,Object>> selectPersonAsMaps() throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        return mapper.selectPersonAsMaps();
+        return personMapper.selectPersonAsMaps();
     }
 
     @RequestMapping(value = "count", method = RequestMethod.GET)
     public int count() throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        return mapper.count();
+        return personMapper.count();
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "insert", method = RequestMethod.POST, consumes = "application/json")
     public Person insert(@RequestBody Person person) throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        mapper.insertPerson(person);
+        personMapper.insertPerson(person);
 
         return person;
     }
@@ -83,25 +78,22 @@ public class PersonController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "deleteById/{id}", method = RequestMethod.GET)
     public int deleteOne(@PathVariable int id) throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        mapper.deleteById(id);
+        Integer deleteCount = personMapper.deleteById(id);
 
         // manually rollback
 //        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        return mapper.deleteById(id);
+        return deleteCount;
     }
 
     @RequestMapping(value = "selectByIds", method = RequestMethod.GET)
     public List<Person> selectByIds(@RequestParam(value = "ids") String ids) throws IOException {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        return mapper.selectSpecificIds(ids);
+        return personMapper.selectSpecificIds(ids);
     }
 
     @RequestMapping(value = "ageRange", method = RequestMethod.GET)
     public List<Person> age(@RequestParam Map<String, String> params,
                                           @RequestParam(required = false) Integer limit,
                                           @RequestParam(required = false) Integer offset) {
-        PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         RowBounds rowBounds = RowBounds.DEFAULT;
         if (params.containsKey("limit") && params.containsKey("offset")) {
             rowBounds = new RowBounds(offset, limit);
@@ -110,7 +102,7 @@ public class PersonController {
         } else if (params.containsKey("limit")) {
             rowBounds = new RowBounds(RowBounds.NO_ROW_OFFSET, limit);
         }
-        return mapper.personAgeGreatThan(params, rowBounds);
+        return personMapper.personAgeGreatThan(params, rowBounds);
     }
     
     @ExceptionHandler(DataIntegrityViolationException.class)

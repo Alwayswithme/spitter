@@ -4,6 +4,8 @@ import me.phx.model.Person;
 import me.phx.mybatis.provider.PersonProvider;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Map;
 /**
  * @author phoenix
  */
+@Component
 public interface PersonMapper {
     @Select("SELECT * FROM Person")
     List<Person> selectAll();

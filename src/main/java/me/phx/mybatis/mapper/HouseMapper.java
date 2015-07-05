@@ -1,7 +1,7 @@
 package me.phx.mybatis.mapper;
 
 import me.phx.model.House;
-import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -9,17 +9,10 @@ import java.util.Map;
 /**
  * @author phoenix
  */
-@CacheNamespace(readWrite = false)  // use readWrite = true need to implements Serializable
+@Component
 public interface HouseMapper {
-    @Select({
-            "SELECT *",
-            "FROM House"
-    })
+
     List<Map<String,Object>> selectHouseAsMaps();
 
-    @Select("SELECT * FROM House ORDER BY id")
-    @Results({
-            @Result(property = "owner", column = "owner_id", one = @One(select = "me.phx.mybatis.mapper.PersonMapper.selectPersonById")),
-    })
     List<House> selectHouse();
 }

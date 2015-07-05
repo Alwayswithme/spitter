@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.phx.mybatis.mapper.HouseMapper">
+  <cache></cache>
+
+  <resultMap id="houseWithOwner" type="house">
+    <id property="id" column="id"/>
+    <result property="size" column="size"/>
+    <result property="location" column="location"/>
+    <association property="owner" column="owner_id" javaType="person" select="me.phx.mybatis.mapper.PersonMapper.selectPersonById"/>
+  </resultMap>
+
+  <select id="selectHouseAsMaps" resultType="Map">
+    select * FROM House
+  </select>
+
+  <select id="selectHouse" resultMap="houseWithOwner">
+    SELECT *
+    FROM House
+    ORDER BY id
+  </select>
+
+</mapper>
