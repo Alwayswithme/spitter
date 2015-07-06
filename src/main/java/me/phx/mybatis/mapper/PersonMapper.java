@@ -1,11 +1,9 @@
 package me.phx.mybatis.mapper;
 
 import me.phx.model.Person;
-import me.phx.mybatis.provider.PersonProvider;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -20,14 +18,13 @@ public interface PersonMapper {
 
     Person selectPersonById(int id);
 
+    Person selectPersonById(Person person);
+
     @Select({ "SELECT * FROM Person"})
     @MapKey("id")
     Map<Integer, Person> selectPersonAsMapById();
 
-    @Select({
-            "SELECT p.name as personName, p.age as personAge",
-            "FROM Person p"
-    })
+
     List<Map<String,Object>> selectPersonAsMaps();
 
     @Select("SELECT count(1) FROM Person")
@@ -60,6 +57,5 @@ public interface PersonMapper {
 
     Person selectPersonJoinDevices(Integer id);
 
-    @SelectProvider(type = PersonProvider.class, method = "personAgeRange")
-    List<Person> personAgeGreatThan(Map<String, String> param, RowBounds rowBounds);
+    List<Person> personAgeGreatThan(@Param("param")Map<String, Object>param, RowBounds rowBounds);
 }

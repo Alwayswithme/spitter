@@ -30,11 +30,16 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="Blog" domainObjectName="Blog" >
+        <table tableName="Blog" domainObjectName="Blog"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+            <columnOverride column="author_id" property="author" javaType="Author" />
         </table>
-        <table tableName="Author" domainObjectName="Author" >
+        <table tableName="Author" domainObjectName="Author"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" sqlStatement="JDBC" identity="true" />
             <columnOverride column="favourite_section" property="favouriteSection" javaType="Section" />

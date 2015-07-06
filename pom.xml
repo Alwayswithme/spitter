@@ -17,7 +17,6 @@
   <properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     <mybatis.version>3.3.0</mybatis.version>
 
     <!-- web library version -->
@@ -83,6 +82,15 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
       <!-- When using xml-less approach, you need to disable Maven's warning about missing web.xml -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

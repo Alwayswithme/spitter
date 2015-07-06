@@ -22,4 +22,6 @@ public interface DeviceMapper {
 
 //    @Update("UPDATE Device SET name = #{name}, owner_id = #{owner.id}, type = #{type} WHERE id = #{id}")
     Integer updateDevice(Device device);
+
+    
 }

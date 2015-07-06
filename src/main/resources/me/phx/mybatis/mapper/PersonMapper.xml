@@ -10,32 +10,53 @@
     <result property="name" column="name"/>
     <result property="age" column="age"/>
   </resultMap>
-
+  <resultMap id="device" type="device">
+    <id property="id" column="d"/>
+    <result property="name" column="name"/>
+    <result property="type" column="type"/>
+  </resultMap>
   <resultMap id="personJoinDevices" type="person">
     <id property="id" column="id"/>
     <result property="name" column="name"/>
     <result property="age" column="age"/>
-    <collection property="devices" ofType="device">
-      <id property="id" column="device_id"/>
-      <result property="name" column="device_name"/>
-      <result property="type" column="device_type"/>
-    </collection>
+    <collection property="devices" resultMap="device" columnPrefix="device_"/>
   </resultMap>
 
   <select id="selectPersonJoinDevices" parameterType="int" resultMap="personJoinDevices">
-    SELECT p.*,
-    d.id AS device_id,
-    d.name AS device_name,
-    d.type AS device_type,
-    d.owner_id AS device_owner_id
+    SELECT
+      p.*,
+      d.id       AS device_id,
+      d.name     AS device_name,
+      d.type     AS device_type,
+      d.owner_id AS device_owner_id
     FROM Person p
-    LEFT JOIN Device d ON p.id = d.owner_id
+      LEFT JOIN Device d ON p.id = d.owner_id
     WHERE p.id = #{id}
   </select>
+
   <select id="selectPersonById" resultType="me.phx.model.Person">
     SELECT *
     FROM Person
     WHERE id = #{id}
   </select>
 
+  <select id="selectPersonAsMaps" resultType="java.util.Map">
+    SELECT
+      p.name         AS personName,
+      p.age          AS personAge,
+      p.created_date AS cretedDate
+    FROM Person p
+  </select>
+  <select id="personAgeGreatThan" parameterType="map" resultType="person">
+    SELECT *
+    FROM Person
+    <where>
+      <if test="param.ageGt != null">
+        age &gt; #{param.ageGt}
+      </if>
+      <if test="param.ageLt != null">
+        AND age &lt; #{param.ageLt}
+      </if>
+    </where>
+  </select>
 </mapper>

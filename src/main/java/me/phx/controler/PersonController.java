@@ -37,7 +37,7 @@ public class PersonController {
     public Person selectPersonWithDevices(@PathVariable int id) {
 //        return mapper.selectPersonWithDevices(id);         // use annotation
 
-        return personMapper.selectPersonJoinDevices(id);  // use xml mapper
+        return personMapper.selectPersonById(id);  // use xml mapper
     }
 
     @RequestMapping(value = "selectAndModifyById/{id}", method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "ageRange", method = RequestMethod.GET)
-    public List<Person> age(@RequestParam Map<String, String> params,
+    public List<Person> age(@RequestParam Map<String, Object> params,
                                           @RequestParam(required = false) Integer limit,
                                           @RequestParam(required = false) Integer offset) {
         RowBounds rowBounds = RowBounds.DEFAULT;

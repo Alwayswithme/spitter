@@ -1,21 +1,18 @@
 package me.phx.config;
 
-import me.phx.model.Device;
 import me.phx.model.DeviceType;
 import me.phx.model.HouseSize;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
-import org.apache.ibatis.type.TypeHandler;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 
 /**
  * @author phoenix
@@ -30,16 +27,14 @@ public class MybatisConfig {
 //        sqlSessionFactory.setConfigLocation(new ClassPathResource(resources));
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
-        TypeHandler<DeviceType> typeEnumHandler = new EnumOrdinalTypeHandler<>(DeviceType.class);
-        TypeHandler<HouseSize> sizeEnumHandler = new EnumOrdinalTypeHandler<>(HouseSize.class);
-        TypeHandler<?>[] handlers = Arrays.asList(
-                typeEnumHandler,
-                sizeEnumHandler
-        ).toArray(new TypeHandler<?>[]{});
-//        sqlSessionFactory.setTypeHandlers(new TypeHandler[]{typeEnumHandler, sizeEnumHandler});
-        sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(DeviceType.class, typeEnumHandler);
-        sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(HouseSize.class, sizeEnumHandler);
 
+//        sqlSessionFactory.setTypeHandlers(new TypeHandler[]{typeEnumHandler, sizeEnumHandler});
+        org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getObject().getConfiguration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setUseGeneratedKeys(true);
+        TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+        typeHandlerRegistry.register(DeviceType.class, new EnumOrdinalTypeHandler<>(DeviceType.class));
+        typeHandlerRegistry.register(HouseSize.class, new EnumOrdinalTypeHandler<>(HouseSize.class));
 //        Resource[] mapperLocations = new Resource[] {
 //                new ClassPathResource("me/phx/mybatis/mapper/PersonMapper.xml")
 //        };
