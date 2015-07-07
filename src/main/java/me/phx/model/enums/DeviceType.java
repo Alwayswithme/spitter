@@ -1,4 +1,4 @@
-package me.phx.model;
+package me.phx.model.enums;
 
 /**
  * @author phoenix

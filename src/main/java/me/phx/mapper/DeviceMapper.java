@@ -1,4 +1,4 @@
-package me.phx.mybatis.mapper;
+package me.phx.mapper;
 
 import me.phx.model.Device;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public interface DeviceMapper {
 //            "WHERE FIND_IN_SET(id, #{ids})"
 //            })
 //    @Results({
-//        @Result(property = "owner", column = "owner_id", one = @One(select = "me.phx.mybatis.mapper.PersonMapper.selectPersonById"))
+//        @Result(property = "owner", column = "owner_id", one = @One(select = "me.phx.mapper.PersonMapper.selectPersonById"))
 //    })
     List<Device> selectDevicesByIds(int ids);
 

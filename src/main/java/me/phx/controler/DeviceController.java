@@ -1,7 +1,7 @@
 package me.phx.controler;
 
 import me.phx.model.Device;
-import me.phx.repository.DeviceRepository;
+import me.phx.mapper.DeviceMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +21,11 @@ public class DeviceController {
     private static final Logger log = Logger.getLogger(PersonController.class);
 
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceMapper deviceMapper;
 
     @RequestMapping(value = "selectDevicesByOwner", method = RequestMethod.GET)
     public List<Device> selectDevicesByOwner(@RequestParam(value = "id") Integer ownerId) throws IOException {
-        log.info(".... Fetching devices");
-        List<Device> devices = deviceRepository.getByOwnerId(ownerId);
-        log.info("devices -->" + devices);
+        List<Device> devices = deviceMapper.selectDevicesByOwner(ownerId);
         return devices;
     }
 }

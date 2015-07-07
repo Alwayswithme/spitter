@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
-        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+    PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry location="lib/mysql-connector-java-5.1.35.jar" />
+  <classPathEntry location="/home/phoenix/.m2/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar"/>
 
-    <context id="MySQLTable" targetRuntime="MyBatis3">
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost/spitter"
-                        userId="root"
-                        password="cloudSoft@Skybility">
-        </jdbcConnection>
+  <context id="MySQL" targetRuntime="MyBatis3Simple" defaultModelType="hierarchical">
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <!-- 控制注释生成 -->
+    <commentGenerator>
+      <property name="suppressAllComments" value="true"/>
+      <property name="suppressDate" value="true"/>
+    </commentGenerator>
 
-        <javaTypeResolver >
-            <property name="forceBigDecimals" value="false" />
-        </javaTypeResolver>
+    <jdbcConnection
+        driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost/spitter"
+        userId="root"
+        password="cloudSoft@Skybility">
+    </jdbcConnection>
 
-        <javaModelGenerator targetPackage="test.model" targetProject="src/main">
-            <property name="enableSubPackages" value="true" />
-            <property name="trimStrings" value="true" />
-        </javaModelGenerator>
+    <!-- 生成Java 实体 -->
+    <javaModelGenerator targetPackage="test.model" targetProject="/" >
+      <property name="rootClass" value="me.phx.model.AbstractEntity"/>
+    </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="test.xml"  targetProject="src/main">
-            <property name="enableSubPackages" value="true" />
-        </sqlMapGenerator>
+    <!-- 生成XML Mapper -->
+    <sqlMapGenerator targetPackage="test.xml" targetProject="/">
+    </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="src/main">
-            <property name="enableSubPackages" value="true" />
-        </javaClientGenerator>
+    <!-- 生成Java Mapper 接口 -->
+    <javaClientGenerator targetPackage="test.mapper" targetProject="/" type="XMLMAPPER">
+      <property name="rootInterface" value="me.phx.mybatis.mapper.BaseMapper" />
+    </javaClientGenerator>
 
-        <table tableName="Blog" domainObjectName="Blog"
-               enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-            <columnOverride column="author_id" property="author" javaType="Author" />
-        </table>
-        <table tableName="Author" domainObjectName="Author"
-               enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-            <columnOverride column="favourite_section" property="favouriteSection" javaType="Section" />
-        </table>
+    <table tableName="Device" domainObjectName="Device" >
+      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="type" property="deviceType" javaType="me.phx.model.enums.DeviceType"/>
+    </table>
 
-    </context>
+    <table tableName="House" >
+      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="size" property="houseSize" javaType="me.phx.model.enums.HouseSize"/>
+      <columnOverride column="ip_address" property="ipAddress" javaType="java.lang.String"/>
+    </table>
+
+    <table tableName="%">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+    </table>
+  </context>
 </generatorConfiguration>

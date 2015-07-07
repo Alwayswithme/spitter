@@ -1,7 +1,7 @@
 package me.phx.controler;
 
 import me.phx.model.Person;
-import me.phx.mybatis.mapper.PersonMapper;
+import me.phx.mapper.PersonMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package me.phx.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.phx.model.enums.HouseSize;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;

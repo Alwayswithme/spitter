@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.phx.mybatis.mapper.HouseMapper">
+<mapper namespace="me.phx.mapper.HouseMapper">
   <cache/>
   <resultMap id="houseWithOwner" type="me.phx.model.House">
     <id property="id" column="id"/>
     <result property="size" column="size"/>
     <result property="location" column="location"/>
     <association property="owner" column="owner_id" javaType="person"
-                 select="me.phx.mybatis.mapper.PersonMapper.selectPersonById"/>
+                 select="me.phx.mapper.PersonMapper.selectPersonById"/>
   </resultMap>
 
   <insert id="insertHouse" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

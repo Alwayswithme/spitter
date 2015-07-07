@@ -1,4 +1,4 @@
-package me.phx.mybatis.mapper;
+package me.phx.mapper;
 
 import me.phx.model.Person;
 import org.apache.ibatis.annotations.*;
@@ -38,7 +38,6 @@ public interface PersonMapper {
     @Options(useGeneratedKeys = true, keyProperty="id", flushCache = true)
     Integer insertPerson(Person person);  // Note: once use Options, the default behavior of flushCache will be false
 
-    @Delete("DELETE FROM Person WHERE id = #{id}")
     Integer deleteById(Integer id);
 
     @Select({
@@ -51,7 +50,7 @@ public interface PersonMapper {
     @Select({"SELECT * FROM Person",
             "WHERE id = #{id}"})
     @Results({
-            @Result(property = "devices", column = "id", many = @Many(select = "me.phx.mybatis.mapper.DeviceMapper.selectDevicesByOwner")),
+            @Result(property = "devices", column = "id", many = @Many(select = "me.phx.mapper.DeviceMapper.selectDevicesByOwner")),
     })
     Person selectPersonWithDevices(Integer id);
 

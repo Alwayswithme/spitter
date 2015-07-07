@@ -23,8 +23,8 @@
   </typeAliases>
 
   <typeHandlers>
-    <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="me.phx.model.DeviceType"/>
-    <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="me.phx.model.HouseSize"/>
+    <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="me.phx.model.enums.DeviceType"/>
+    <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="me.phx.model.enums.HouseSize"/>
   </typeHandlers>
 
 </configuration>

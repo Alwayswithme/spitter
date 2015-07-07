@@ -1,4 +1,4 @@
-package me.phx.mybatis.mapper;
+package me.phx.mapper;
 
 import me.phx.model.House;
 import org.springframework.stereotype.Component;

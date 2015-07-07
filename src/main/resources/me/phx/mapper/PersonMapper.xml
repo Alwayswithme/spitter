@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="me.phx.mybatis.mapper.PersonMapper">
+<mapper namespace="me.phx.mapper.PersonMapper">
   <cache/>
   <resultMap id="person" type="person">
     <id property="id" column="id"/>
@@ -21,6 +21,9 @@
     <result property="age" column="age"/>
     <collection property="devices" resultMap="device" columnPrefix="device_"/>
   </resultMap>
+  <delete id="deleteById">
+    DELETE FROM Person WHERE id = #{id}
+  </delete>
 
   <select id="selectPersonJoinDevices" parameterType="int" resultMap="personJoinDevices">
     SELECT

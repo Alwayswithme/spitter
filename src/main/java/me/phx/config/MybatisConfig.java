@@ -1,7 +1,7 @@
 package me.phx.config;
 
-import me.phx.model.DeviceType;
-import me.phx.model.HouseSize;
+import me.phx.model.enums.DeviceType;
+import me.phx.model.enums.HouseSize;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 /**
  * @author phoenix
  */
-@MapperScan("me.phx.mybatis.mapper")
+@MapperScan("me.phx.mapper")
 @Configuration
 public class MybatisConfig {
     @Bean

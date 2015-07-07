@@ -1,8 +1,8 @@
 package me.phx.controler;
 
 import me.phx.model.House;
-import me.phx.model.HouseSize;
-import me.phx.mybatis.mapper.HouseMapper;
+import me.phx.model.enums.HouseSize;
+import me.phx.mapper.HouseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
