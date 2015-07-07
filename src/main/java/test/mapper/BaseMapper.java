@@ -1,4 +1,4 @@
-package me.phx.mapper;
+package test.mapper;
 
 import me.phx.model.AbstractEntity;
 

@@ -6,7 +6,7 @@
 <generatorConfiguration>
   <classPathEntry location="/home/phoenix/.m2/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar"/>
 
-  <context id="MySQL" targetRuntime="MyBatis3Simple" defaultModelType="hierarchical">
+  <context id="MySQL" targetRuntime="MyBatis3Simple" >
     <property name="beginningDelimiter" value="`"/>
     <property name="endingDelimiter" value="`"/>
     <!-- 控制注释生成 -->
@@ -33,10 +33,13 @@
 
     <!-- 生成Java Mapper 接口 -->
     <javaClientGenerator targetPackage="test.mapper" targetProject="/" type="XMLMAPPER">
-      <property name="rootInterface" value="me.phx.mybatis.mapper.BaseMapper" />
     </javaClientGenerator>
 
-    <table tableName="Device" domainObjectName="Device" >
+    <table tableName="%">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+    </table>
+
+    <table tableName="Device" domainObjectName="Device"  >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
       <columnOverride column="type" property="deviceType" javaType="me.phx.model.enums.DeviceType"/>
     </table>
@@ -47,8 +50,5 @@
       <columnOverride column="ip_address" property="ipAddress" javaType="java.lang.String"/>
     </table>
 
-    <table tableName="%">
-      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-    </table>
   </context>
 </generatorConfiguration>
