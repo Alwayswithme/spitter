@@ -1,8 +1,7 @@
 package me.phx.controler;
 
-import me.phx.model.House;
-import me.phx.model.enums.HouseSize;
 import me.phx.mapper.HouseMapper;
+import me.phx.model.House;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +43,7 @@ public class HouseController {
         House house = new House();
         house.setLocation("shankala");
 //        house.setOwner(personMapper.selectPersonById(1));
-        house.setSize(HouseSize.SMALL);
+        house.setSize(House.HouseSize.SMALL);
         house.setIpAddress(ip);
         int count = houseMapper.insertHouse(house);
         System.out.println("total count : " + count);

@@ -2,7 +2,6 @@ package me.phx.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.phx.model.enums.HouseSize;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
@@ -20,4 +19,12 @@ public class House implements Serializable {
     private HouseSize size;
     private String ipAddress;
 
+    /**
+     * @author phoenix
+     */
+    public static enum HouseSize {
+        SMALL,
+        MEDIUM,
+        LARGE
+    }
 }

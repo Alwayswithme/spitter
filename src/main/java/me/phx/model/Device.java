@@ -2,7 +2,6 @@ package me.phx.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import me.phx.model.enums.DeviceType;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
@@ -19,4 +18,12 @@ public class Device implements Serializable {
     private String name;
     private DeviceType type;
 
+    /**
+     * @author phoenix
+     */
+    public static enum DeviceType {
+        PC,
+        LAPTOP,
+        CELLPHONE
+    }
 }
