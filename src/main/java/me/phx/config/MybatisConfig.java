@@ -1,7 +1,7 @@
 package me.phx.config;
 
-import me.phx.model.Device;
-import me.phx.model.House;
+import me.phx.model.enums.DeviceType;
+import me.phx.model.enums.HouseSize;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
@@ -33,8 +33,8 @@ public class MybatisConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setUseGeneratedKeys(true);
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-        typeHandlerRegistry.register(Device.DeviceType.class, new EnumOrdinalTypeHandler<>(Device.DeviceType.class));
-        typeHandlerRegistry.register(House.HouseSize.class, new EnumOrdinalTypeHandler<>(House.HouseSize.class));
+        typeHandlerRegistry.register(DeviceType.class, new EnumOrdinalTypeHandler<>(DeviceType.class));
+        typeHandlerRegistry.register(HouseSize.class, new EnumOrdinalTypeHandler<>(HouseSize.class));
 //        Resource[] mapperLocations = new Resource[] {
 //                new ClassPathResource("me/phx/mybatis/mapper/PersonMapper.xml")
 //        };

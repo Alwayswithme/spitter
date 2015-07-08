@@ -9,7 +9,6 @@
   <context id="MySQL" targetRuntime="MyBatis3Simple" >
     <property name="beginningDelimiter" value="`"/>
     <property name="endingDelimiter" value="`"/>
-
     <!-- 控制注释生成 -->
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
@@ -42,12 +41,12 @@
 
     <table tableName="Device" domainObjectName="Device"  >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="type" property="deviceType" javaType="me.phx.model.Device.DeviceType"/>
+      <columnOverride column="type" property="deviceType" javaType="me.phx.model.enums.DeviceType"/>
     </table>
 
     <table tableName="House" >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="size" property="houseSize" javaType="me.phx.model.House.HouseSize"/>
+      <columnOverride column="size" property="houseSize" javaType="me.phx.model.enums.HouseSize"/>
       <columnOverride column="ip_address" property="ipAddress" javaType="java.lang.String"/>
     </table>
 

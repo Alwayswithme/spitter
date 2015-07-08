@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * @author phoenix
  */
-@Configuration
+//@Configuration
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
     // equivalent for <mvc:default-servlet-handler/> tag
