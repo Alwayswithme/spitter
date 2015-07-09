@@ -2,16 +2,19 @@ package me.phx.typehandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.joda.time.*;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.joda.time.DateTime;
+import org.joda.time.Instant;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import java.sql.*;
 
 /**
  * @author ye
  */
+@MappedJdbcTypes(JdbcType.TIME)
 public class LocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
-
-    public static final DateTimeZone TIME_ZONE = DateTimeZone.getDefault();
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType) throws SQLException {

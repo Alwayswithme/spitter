@@ -2,7 +2,7 @@ package me.phx.typehandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.joda.time.DateTimeZone;
+import org.apache.ibatis.type.MappedJdbcTypes;
 import org.joda.time.LocalDate;
 
 import java.sql.*;
@@ -10,9 +10,8 @@ import java.sql.*;
 /**
  * @author ye
  */
+@MappedJdbcTypes(JdbcType.DATE)
 public class LocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
-
-    public static final DateTimeZone TIME_ZONE = DateTimeZone.getDefault();
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType) throws SQLException {
@@ -26,18 +25,18 @@ public class LocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
     @Override
     public LocalDate getNullableResult(ResultSet rs, String columnName) throws SQLException {
         Date ts = rs.getDate(columnName);
-        return ts == null ? null : new LocalDate(ts.getTime(), TIME_ZONE);
+        return ts == null ? null : new LocalDate(ts.getTime());
     }
 
     @Override
     public LocalDate getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         Date ts = rs.getDate(columnIndex);
-        return ts == null ? null : new LocalDate(ts.getTime(), TIME_ZONE);
+        return ts == null ? null : new LocalDate(ts.getTime());
     }
 
     @Override
     public LocalDate getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         Date ts = cs.getDate(columnIndex);
-        return ts == null ? null : new LocalDate(ts.getTime(), TIME_ZONE);
+        return ts == null ? null : new LocalDate(ts.getTime());
     }
 }
