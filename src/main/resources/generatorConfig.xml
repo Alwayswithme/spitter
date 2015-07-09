@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <classPathEntry location="/home/phoenix/.m2/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar"/>
+  <classPathEntry location="./target/classes"/>
 
   <context id="MySQL" targetRuntime="MyBatis3Simple" >
     <property name="beginningDelimiter" value="`"/>
@@ -33,21 +33,23 @@
 
     <!-- 生成Java Mapper 接口 -->
     <javaClientGenerator targetPackage="me.phx.mapper" targetProject="./src/main/java" type="XMLMAPPER">
+      <property name="rootInterface" value="me.phx.mapper.BaseMapper" />
     </javaClientGenerator>
 
-    <table tableName="%">
+    <table tableName="Person">
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="created_date" javaType="java.time.LocalDateTime"/>
     </table>
 
     <table tableName="Device" domainObjectName="Device"  >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="type" property="deviceType" javaType="DeviceType"/>
+      <columnOverride column="type" property="type" javaType="Type"/>
     </table>
 
     <table tableName="House" >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="size" property="houseSize" javaType="HouseSize"/>
-      <columnOverride column="ip_address" property="ipAddress" javaType="java.lang.String"/>
+      <columnOverride column="size" property="size" javaType="Size"/>
+      <columnOverride column="ip_address"  javaType="java.lang.String"/>
     </table>
 
   </context>

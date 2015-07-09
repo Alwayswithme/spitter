@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.phx.mapper.DeviceMapper">
-  <update id="updateDevice">
-
+<mapper namespace="me.phx.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="me.phx.model.Device" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="deviceType" jdbcType="TINYINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="me.phx.model.Device" useGeneratedKeys="true" keyProperty="id" >
+    insert into Device (owner_id, name, type
+      )
+    values (#{ownerId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{deviceType,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="me.phx.model.Device" >
+    update Device
+    set owner_id = #{ownerId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{deviceType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectDevicesByOwner" resultType="device">
-    SELECT * FROM Device WHERE owner_id = #{ownerId}
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, owner_id, name, type
+    from Device
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectDevicesByIds" resultType="device">
-
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, owner_id, name, type
+    from Device
   </select>
-
 </mapper>

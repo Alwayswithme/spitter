@@ -29,7 +29,7 @@ public class HouseController {
 
     @RequestMapping(value = "selectHouseAsObject", method = RequestMethod.GET)
     public List<House> selectHouseAsObject() throws IOException {
-        return houseMapper.selectHouseAsObject();
+        return houseMapper.selectAll();
     }
 
     @RequestMapping(value = "selectHouseWithOwner", method = RequestMethod.GET)
@@ -43,9 +43,9 @@ public class HouseController {
         House house = new House();
         house.setLocation("shankala");
 //        house.setOwner(personMapper.selectPersonById(1));
-        house.setSize(House.HouseSize.SMALL);
+        house.setSize(House.Size.SMALL);
         house.setIpAddress(ip);
-        int count = houseMapper.insertHouse(house);
+        int count = houseMapper.insert(house);
         System.out.println("total count : " + count);
         return house;
     }

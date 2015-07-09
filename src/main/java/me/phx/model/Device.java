@@ -17,12 +17,12 @@ public class Device extends AbstractEntity {
 
     private String name;
 
-    private DeviceType deviceType;
+    private Type type;
 
     /**
      * @author phoenix
      */
-    public enum DeviceType {
+    public enum Type {
         PC,
         LAPTOP,
         CELLPHONE

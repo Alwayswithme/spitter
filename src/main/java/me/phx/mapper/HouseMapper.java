@@ -10,13 +10,8 @@ import java.util.Map;
  * @author phoenix
  */
 @Component
-public interface HouseMapper {
-
+public interface HouseMapper extends BaseMapper<House>  {
     List<Map<String,Object>> selectHouseAsMaps();
 
-    List<House> selectHouseAsObject();
-
     List<House> selectHouseWithOwner();
-
-    int insertHouse(House house);
 }

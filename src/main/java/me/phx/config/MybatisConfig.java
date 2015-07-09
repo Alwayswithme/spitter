@@ -28,14 +28,16 @@ public class MybatisConfig {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 //        sqlSessionFactory.setConfigLocation(new ClassPathResource(resources));
         sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.setFailFast(true);
         sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
+        sqlSessionFactory.setTypeHandlersPackage("me.phx.mybatis.handler");
 
         org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getObject().getConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setUseGeneratedKeys(true);
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
 
-        ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<Class<?>>();
+        ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
         resolverUtil.find(new ResolverUtil.IsA(Enum.class), "me.phx.model");
         Set<Class<? extends Class<?>>> typeSet = resolverUtil.getClasses();
         for(Class<?> type : typeSet){

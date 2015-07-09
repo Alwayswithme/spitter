@@ -1,48 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="me.phx.mapper.HouseMapper">
-  <cache/>
-  <resultMap id="houseWithOwner" type="me.phx.model.House">
-    <id property="id" column="id"/>
-    <result property="size" column="size"/>
-    <result property="location" column="location"/>
-    <association property="owner" column="owner_id" javaType="person"
-                 select="me.phx.mapper.PersonMapper.selectPersonById"/>
+  <resultMap id="BaseResultMap" type="me.phx.model.House">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER"/>
+    <result column="size" property="size" jdbcType="TINYINT"/>
+    <result column="location" property="location" jdbcType="VARCHAR"/>
+    <result column="ip_address" property="ipAddress" jdbcType="VARBINARY"/>
   </resultMap>
-
-  <insert id="insertHouse" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-    INSERT INTO House (owner_id, size, location, ip_address)
-    VALUES (#{owner.id,jdbcType=NUMERIC}, #{size}, #{location}, INET6_ATON(#{ipAddress}))
+  <resultMap id="houseWithOwner" type="me.phx.model.House">
+    <id column="id" property="id"/>
+    <result column="size" property="size"/>
+    <result column="location" property="location"/>
+    <result column="ip_address" property="ipAddress"/>
+    <association property="owner" column="owner_id" select="me.phx.mapper.PersonMapper.selectByPrimaryKey" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    DELETE FROM House
+    WHERE id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="me.phx.model.House" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO House (owner_id, size, location,
+                       ip_address)
+    VALUES (#{ownerId,jdbcType=INTEGER}, #{houseSize,jdbcType=TINYINT}, #{location,jdbcType=VARCHAR},
+            #{ipAddress,jdbcType=VARBINARY})
   </insert>
-
-  <select id="selectHouseAsMaps" resultType="Map">
-    SELECT *
-    FROM House
-    ORDER BY id
-  </select>
-
-  <!--<select id="selectHouse" resultMap="houseWithOwner">-->
-  <!--SELECT *-->
-  <!--FROM House-->
-  <!--ORDER BY id-->
-  <!--</select>-->
-
-  <select id="selectHouseAsObject" resultType="house">
+  <update id="updateByPrimaryKey" parameterType="me.phx.model.House">
+    UPDATE House
+    SET owner_id = #{ownerId,jdbcType=INTEGER},
+      size       = #{houseSize,jdbcType=TINYINT},
+      location   = #{location,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARBINARY}
+    WHERE id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     SELECT
       id,
-      location,
+      owner_id,
       size,
+      location,
+      ip_address
+    FROM House
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+      id,
+      owner_id,
+      size,
+#       location,
       INET6_NTOA(ip_address) AS ipAddress
     FROM House
-    ORDER BY id
   </select>
-
+  <select id="selectHouseAsMaps" resultType="java.util.Map">
+    SELECT
+      id,
+      owner_id,
+      size AS houseSize,
+      location
+    FROM House
+  </select>
   <select id="selectHouseWithOwner" resultMap="houseWithOwner">
     SELECT
       id,
-      location,
-      size,
       owner_id,
+      size,
+      location,
       INET6_NTOA(ip_address) AS ipAddress
     FROM House
   </select>
