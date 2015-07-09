@@ -1,13 +1,10 @@
 package me.phx.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.apache.ibatis.type.Alias;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,6 +12,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Alias("person")
 public class Person extends AbstractEntity {
@@ -23,7 +21,7 @@ public class Person extends AbstractEntity {
     @NonNull private String name;
     @NonNull private Integer age;
 
-    private Date createdDate;
+    private LocalDateTime createdDate;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Device> devices;  // ignoring this field if it is null
 }

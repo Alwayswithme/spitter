@@ -1,20 +1,23 @@
 package me.phx.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.apache.ibatis.type.Alias;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @author phoenix
  */
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Alias("device")
 public class Device extends AbstractEntity {
     private Integer id;
-    private Person owner;
+
+    private Integer ownerId;
+
     private String name;
-    private DeviceType type;
+
+    private DeviceType deviceType;
 
     /**
      * @author phoenix
