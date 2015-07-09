@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Data
 @Alias("person")
-public class Person implements Serializable {
+public class Person extends AbstractEntity {
     private Integer id;      // when return person as json this field will be ignoring
 
     @NonNull private String name;

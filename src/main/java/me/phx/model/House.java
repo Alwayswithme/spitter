@@ -4,16 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
-import java.io.Serializable;
-
 /**
  * @author phoenix
  */
 @NoArgsConstructor
 @Data
 @Alias("house")
-public class House implements Serializable {
-    private int id;
+public class House extends AbstractEntity {
+    private Integer id;
     private Person owner;
     private String location;
     private HouseSize size;
@@ -22,7 +20,7 @@ public class House implements Serializable {
     /**
      * @author phoenix
      */
-    public static enum HouseSize {
+    public enum HouseSize {
         SMALL,
         MEDIUM,
         LARGE

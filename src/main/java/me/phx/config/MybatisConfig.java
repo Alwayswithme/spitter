@@ -1,7 +1,7 @@
 package me.phx.config;
 
-import me.phx.model.enums.DeviceType;
-import me.phx.model.enums.HouseSize;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
@@ -13,12 +13,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import java.util.Set;
 
 /**
  * @author phoenix
  */
 @MapperScan("me.phx.mapper")
 @Configuration
+@Slf4j
 public class MybatisConfig {
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
@@ -28,17 +30,20 @@ public class MybatisConfig {
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setTypeAliasesPackage("me.phx.model");
 
-//        sqlSessionFactory.setTypeHandlers(new TypeHandler[]{typeEnumHandler, sizeEnumHandler});
         org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getObject().getConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setUseGeneratedKeys(true);
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-        typeHandlerRegistry.register(DeviceType.class, new EnumOrdinalTypeHandler<>(DeviceType.class));
-        typeHandlerRegistry.register(HouseSize.class, new EnumOrdinalTypeHandler<>(HouseSize.class));
-//        Resource[] mapperLocations = new Resource[] {
-//                new ClassPathResource("me/phx/mybatis/mapper/PersonMapper.xml")
-//        };
-//        sqlSessionFactory.setMapperLocations(mapperLocations);
+
+        ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<Class<?>>();
+        resolverUtil.find(new ResolverUtil.IsA(Enum.class), "me.phx.model");
+        Set<Class<? extends Class<?>>> typeSet = resolverUtil.getClasses();
+        for(Class<?> type : typeSet){
+            typeHandlerRegistry.register(type, new EnumOrdinalTypeHandler(type));
+            if (log.isDebugEnabled()) {
+                log.debug("Scanned type: '" + type + "' use enum ordinal type handler");
+            }
+        }
 
         return sqlSessionFactory.getObject();
     }

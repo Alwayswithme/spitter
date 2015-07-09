@@ -23,16 +23,16 @@
     </jdbcConnection>
 
     <!-- 生成Java 实体 -->
-    <javaModelGenerator targetPackage="test.model" targetProject="/" >
+    <javaModelGenerator targetPackage="me.phx.model" targetProject="./src/main/java" >
       <property name="rootClass" value="me.phx.model.AbstractEntity"/>
     </javaModelGenerator>
 
     <!-- 生成XML Mapper -->
-    <sqlMapGenerator targetPackage="test.xml" targetProject="/">
+    <sqlMapGenerator targetPackage="me.phx.mapper" targetProject="./src/main/resources">
     </sqlMapGenerator>
 
     <!-- 生成Java Mapper 接口 -->
-    <javaClientGenerator targetPackage="test.mapper" targetProject="/" type="XMLMAPPER">
+    <javaClientGenerator targetPackage="me.phx.mapper" targetProject="./src/main/java" type="XMLMAPPER">
     </javaClientGenerator>
 
     <table tableName="%">
@@ -41,12 +41,12 @@
 
     <table tableName="Device" domainObjectName="Device"  >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="type" property="deviceType" javaType="me.phx.model.enums.DeviceType"/>
+      <columnOverride column="type" property="deviceType" javaType="DeviceType"/>
     </table>
 
     <table tableName="House" >
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="size" property="houseSize" javaType="me.phx.model.enums.HouseSize"/>
+      <columnOverride column="size" property="houseSize" javaType="HouseSize"/>
       <columnOverride column="ip_address" property="ipAddress" javaType="java.lang.String"/>
     </table>
 

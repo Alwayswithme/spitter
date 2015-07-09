@@ -1,8 +1,8 @@
 package me.phx.controler;
 
-import me.phx.model.Device;
+import lombok.extern.java.Log;
 import me.phx.mapper.DeviceMapper;
-import org.apache.log4j.Logger;
+import me.phx.model.Device;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +15,10 @@ import java.util.List;
 /**
  * @author phoenix
  */
+@Log
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
-    private static final Logger log = Logger.getLogger(PersonController.class);
 
     @Autowired
     private DeviceMapper deviceMapper;
