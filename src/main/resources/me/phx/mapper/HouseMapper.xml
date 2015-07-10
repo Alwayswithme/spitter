@@ -55,7 +55,7 @@
   <select id="selectHouseAsMaps" resultType="java.util.Map">
     SELECT
       id,
-      owner_id,
+      owner_id AS ownerId,
       size AS houseSize,
       location
     FROM House

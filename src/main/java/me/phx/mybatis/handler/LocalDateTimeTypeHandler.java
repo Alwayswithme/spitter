@@ -2,7 +2,6 @@ package me.phx.mybatis.handler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -10,14 +9,10 @@ import java.time.LocalDateTime;
 /**
  * @author phoenix
  */
-@MappedJdbcTypes(JdbcType.TIMESTAMP)
 public class LocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, LocalDateTime parameter, JdbcType jdbcType) throws SQLException {
-        if (parameter != null) {
-            ps.setTimestamp(i, Timestamp.valueOf(parameter));
-        }
-        ps.setTimestamp(i, null);
+        ps.setTimestamp(i, Timestamp.valueOf(parameter));
     }
 
     @Override
