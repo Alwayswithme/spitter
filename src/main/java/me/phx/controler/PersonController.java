@@ -59,10 +59,10 @@ public class PersonController {
     /**
      * type-safe and more readable way
      */
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public List<Map<String,Object>> selectPersonAsMaps() throws IOException {
-//        return personMapper.selectPersonAsMaps();
-//    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public List<Map<String,Object>> selectPersonAsMaps() throws IOException {
+        return personMapper.selectPersonAsMaps();
+    }
 //
 //    @RequestMapping(value = "count", method = RequestMethod.GET)
 //    public int count() throws IOException {

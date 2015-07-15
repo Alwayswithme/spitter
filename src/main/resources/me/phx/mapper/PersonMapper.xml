@@ -33,4 +33,8 @@
     select id, name, age, created_date
     from Person
   </select>
+  <select id="selectPersonAsMaps" resultType="java.util.Map">
+    select id, name, age, created_date
+    from Person
+  </select>
 </mapper>
