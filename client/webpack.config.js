@@ -1,35 +1,45 @@
 var path = require('path');
 var webpack = require('webpack');
 var node_modules = path.resolve(__dirname, 'node_modules');
-var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
+
+var deps = [
+    'react/dist/react.min.js'
+];
 
 var config = {
+
     entry: {
         app: path.resolve(__dirname, 'src/main.js'),
         vendors: ['react']
     },
+
     resolve: {
-        alias: {
-            'react': pathToReact
-        }
+        alias: {}
     },
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
+
     module: {
         loaders: [
             {test: /\.jsx?$/, loader: 'babel'},
-            {test: /\.css$/, loader: 'style!css'},
-            {test: /\.less$/, loader: 'style!css!less'},
+            {test: /\.css$/, loader: 'style!css!postcss-loader'},
             {test: /\.(png|jpg)$/, loader: 'url?limit=25000'},
             {test: /\.woff$/, loader: 'url?limit=100000'}
         ],
-        noParse: [pathToReact]
+        noParse: []
     },
+
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
     ]
 };
+
+deps.forEach(function (dep) {
+    var depPath = path.resolve(node_modules, dep);
+    config.resolve.alias[dep.split(path.sep)[0]] = depPath;
+    config.module.noParse.push(depPath);
+});
 
 module.exports = config;
