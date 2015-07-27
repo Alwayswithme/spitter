@@ -23,8 +23,8 @@ var config = {
 
     module: {
         loaders: [
-            {test: /\.jsx?$/, loader: 'babel'},
-            {test: /\.css$/, loader: 'style!css!postcss-loader'},
+            {test: /\.jsx?$/, loader: 'babel-loader'},
+            {test: /\.css$/, loader: 'style-loader!css-loader!postcss-loader'},
             {test: /\.(png|jpg)$/, loader: 'url?limit=25000'},
             {test: /\.woff$/, loader: 'url?limit=100000'}
         ],
@@ -33,6 +33,11 @@ var config = {
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+    ],
+
+    postcss: [
+        require('postcss-nested')(),
+        require('cssnext')()
     ]
 };
 

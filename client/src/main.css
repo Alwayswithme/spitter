@@ -1,7 +1,31 @@
+:root {
+    /*
+     * color
+     */
+    --bg-color: chartreuse;
+    --font-color: darkviolet;
+
+    /*
+     * font
+     */
+    --font-family-base: 'Segoe UI', 'HelveticaNeue-Light', freesans, sans-serif;
+
+}
+
+/* custom selectors */
+@custom-selector :--header h1, h2, h3, h4, h5, h6;
+
 body {
-    background: chartreuse;
+    font-family: var(--font-family-base);
+    background-color: var(--bg-color);
+}
+
+:--header {
+    margin: 0;
+    padding: 0;
 }
 
 .header {
-    color: darkviolet;
+    display: flex;
+    color: var(--font-color);
 }

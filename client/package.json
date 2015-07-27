@@ -9,9 +9,11 @@
     "webpack-dev-server": "^1.10.1"
   },
   "devDependencies": {
+    "autoprefixer": "^5.2.0",
     "babel-core": "^5.8.5",
     "babel-loader": "^5.3.2",
     "css-loader": "^0.15.5",
+    "csscomb": "^3.1.8",
     "cssnext": "^1.8.2",
     "file-loader": "^0.8.4",
     "postcss": "^4.1.16",
