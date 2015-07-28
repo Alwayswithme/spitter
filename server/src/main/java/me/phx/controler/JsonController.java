@@ -25,7 +25,7 @@ public class JsonController {
 
     @RequestMapping(value = "consume", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String consume(@RequestBody Device device) {
-        System.out.println(device);
+        System.out.println("receive object <" + device + ">");
         return device.toString();
     }
 
@@ -38,8 +38,8 @@ public class JsonController {
 
         RestTemplate restTemplate1 = new RestTemplate();
         ParameterizedTypeReference<List<Map<String, Object>>> responseType1 = new ParameterizedTypeReference<List<Map<String, Object>>>() {};
-        ResponseEntity<List<Map<String, Object>>> exchange1 = restTemplate1.postForEntity("http://localhost:8080/house/selectHouseAsMaps", null, null, responseType1);
-        result.put("exchange1", exchange1.getBody());
+        Map[] maps = restTemplate1.postForObject("http://localhost:8080/house/selectHouseAsMaps", null, Map[].class);
+        result.put("exchange1", maps);
 
         RestTemplate restTemplate2 = new RestTemplate();
         ParameterizedTypeReference<List<House>> responseType2 = new ParameterizedTypeReference<List<House>>() {};
