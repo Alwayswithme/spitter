@@ -22,17 +22,17 @@ public class HouseController {
     @Autowired
     private HouseMapper houseMapper;
 
-    @RequestMapping(value = "selectHouseAsMaps", method = RequestMethod.GET)
+    @RequestMapping(value = "selectHouseAsMaps", method = RequestMethod.POST)
     public List<Map<String,Object>> selectHouseAsMaps() throws IOException {
         return houseMapper.selectHouseAsMaps();
     }
 
-    @RequestMapping(value = "selectHouseAsObject", method = RequestMethod.GET)
+    @RequestMapping(value = "selectHouseAsObject", method = RequestMethod.POST)
     public List<House> selectHouseAsObject() throws IOException {
         return houseMapper.selectAll();
     }
 
-    @RequestMapping(value = "selectHouseWithOwner", method = RequestMethod.GET)
+    @RequestMapping(value = "selectHouseWithOwner", method = RequestMethod.POST)
     public List<House> selectHouseWithOwner() throws IOException {
         return houseMapper.selectHouseWithOwner();
     }
