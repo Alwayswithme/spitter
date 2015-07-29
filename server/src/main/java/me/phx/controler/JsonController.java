@@ -6,9 +6,9 @@ import me.phx.model.House;
 import me.phx.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,5 +69,22 @@ public class JsonController {
         Person exchange3 = restTemplate3.postForObject(url, d, Person.class);
         result.put("exchange3", exchange3);
         return result;
+    }
+
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    @RequestMapping(value = "run4")
+    public Person run4() {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        MultiValueMap<String, String> mvm = new LinkedMultiValueMap<String, String>();
+        mvm.add("jwt", "123");
+        mvm.add("id", Integer.toString(1));
+        mvm.add("ownerId", Integer.toString(2));
+        mvm.add("name", "test");
+        mvm.add("type", "PC");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(mvm, requestHeaders);
+        return restTemplate.postForObject("http://localhost:8080/json/consume", entity, Person.class);
     }
 }
