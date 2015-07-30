@@ -1,24 +1,20 @@
 package me.phx.controler;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 import me.phx.mapper.PersonMapper;
-import me.phx.model.Device;
-import me.phx.model.House;
-import me.phx.model.Person;
+import me.phx.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author phoenix
@@ -29,6 +25,8 @@ public class JsonController {
 
     @Autowired
     PersonMapper personMapper;
+    @Autowired
+    RestTemplate restTemplate;
 
     @RequestMapping(value = "consume", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Person consume(@RequestBody Device device,
@@ -40,7 +38,7 @@ public class JsonController {
     }
 
     @RequestMapping(value = "run")
-    public Map<String,Object> run(String... strings) throws Exception {
+    public Map<String,Object> run() throws Exception {
         Map<String, Object> result = new HashMap<>();
         Map quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Map.class);
         result.put("quote", quote);
@@ -59,20 +57,19 @@ public class JsonController {
         d.setName("test");
         d.setOwnerId(2);
         d.setType(Device.Type.PC);
-        Person exchange3 = restTemplate.postForObject(url, d, Person.class);
-        return exchange3;
+        return restTemplate.postForObject(url, d, Person.class);
     }
 
     @RequestMapping(value = "run4")
     public Person run4() {
         HttpHeaders requestHeaders = new HttpHeaders();
-        MultiValueMap<String, String> mvm = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> mvm = new LinkedMultiValueMap<>();
         mvm.add("jwt", "123");
         mvm.add("id", Integer.toString(1));
         mvm.add("ownerId", Integer.toString(2));
         mvm.add("name", "test");
         mvm.add("type", "PC");
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(mvm, requestHeaders);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(mvm, requestHeaders);
         return restTemplate.postForObject("http://localhost:8080/json/consume", entity, Person.class);
     }
 
@@ -83,8 +80,7 @@ public class JsonController {
         headers.set("t", String.valueOf(System.currentTimeMillis()));
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML));
         HttpEntity<Object> httpEntity = new HttpEntity<>(null, headers);
-        RestObject restObject = restTemplate.postForObject(url, httpEntity, RestObject.class);
-        return restObject;
+        return restTemplate.postForObject(url, httpEntity, RestObject.class);
     }
 
     @RequestMapping(value = "run2")
