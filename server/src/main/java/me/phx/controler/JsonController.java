@@ -6,9 +6,9 @@ import me.phx.model.House;
 import me.phx.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,29 +33,23 @@ public class JsonController {
     @RequestMapping(value = "consume", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Person consume(@RequestBody Device device,
                           @RequestParam String jwt) {
-        System.out.println("consume object <" + device + ">");
+        System.out.println("===> 接受到 object <" + device + ">");
         Person person = personMapper.selectByPrimaryKey(device.getOwnerId());
-        System.out.println("produce object <" + person + ">");
+        System.out.println("===> 发送了 object <" + person + ">");
         return person;
     }
 
     @RequestMapping(value = "run")
     public Map<String,Object> run(String... strings) throws Exception {
         Map<String, Object> result = new HashMap<>();
-        RestTemplate restTemplate = new RestTemplate();
         Map quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Map.class);
         result.put("quote", quote);
 
-        RestTemplate restTemplate1 = new RestTemplate();
-        ParameterizedTypeReference<List<Map<String, Object>>> responseType1 = new ParameterizedTypeReference<List<Map<String, Object>>>() {};
-        Map[] maps = restTemplate1.postForObject("http://localhost:8080/house/selectHouseAsMaps", null, Map[].class);
-        result.put("exchange1", maps);
+        return result;
+    }
 
-        RestTemplate restTemplate2 = new RestTemplate();
-        ParameterizedTypeReference<List<House>> responseType2 = new ParameterizedTypeReference<List<House>>() {};
-        ResponseEntity<List<House>> exchange2 = restTemplate2.exchange("http://localhost:8080/house/selectHouseAsObject", HttpMethod.POST, null, responseType2);
-        result.put("exchange2", exchange2.getBody());
-
+    @RequestMapping(value = "run3")
+    public Person run3() throws Exception {
         String jwt = "secret";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/json/consume")
                 .queryParam("jwt", jwt);
@@ -65,15 +59,9 @@ public class JsonController {
         d.setName("test");
         d.setOwnerId(2);
         d.setType(Device.Type.PC);
-        RestTemplate restTemplate3 = new RestTemplate();
-        Person exchange3 = restTemplate3.postForObject(url, d, Person.class);
-        result.put("exchange3", exchange3);
-        return result;
+        Person exchange3 = restTemplate.postForObject(url, d, Person.class);
+        return exchange3;
     }
-
-
-    @Autowired
-    RestTemplate restTemplate;
 
     @RequestMapping(value = "run4")
     public Person run4() {
@@ -87,4 +75,32 @@ public class JsonController {
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(mvm, requestHeaders);
         return restTemplate.postForObject("http://localhost:8080/json/consume", entity, Person.class);
     }
+
+    @RequestMapping(value = "run1")
+    public RestObject run1() throws Exception {
+        String url = "http://localhost:8080/house/selectHouseAsMaps";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("t", String.valueOf(System.currentTimeMillis()));
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML));
+        HttpEntity<Object> httpEntity = new HttpEntity<>(null, headers);
+        RestObject restObject = restTemplate.postForObject(url, httpEntity, RestObject.class);
+        return restObject;
+    }
+
+    @RequestMapping(value = "run2")
+    public List<House> run2() throws Exception {
+        String url = "http://localhost:8080/house/selectHouseAsObject";
+        ParameterizedTypeReference<List<House>> responseType2 = new ParameterizedTypeReference<List<House>>() {};
+        ResponseEntity<List<House>> exchange2 = restTemplate.exchange(url, HttpMethod.POST, null, responseType2);
+        return exchange2.getBody();
+    }
+}
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+class RestObject {
+    boolean ok;
+    List<House> houses;
+    List<Map<String, Object>> maps;
 }

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author phoenix
  */
@@ -29,12 +31,16 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     public RestTemplate restTemplate(HttpClient httpClient) {
-        return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        requestFactory.setConnectionRequestTimeout(2000);
+        requestFactory.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(2));
+        return new RestTemplate(requestFactory);
     }
 
     @Bean
     public HttpClient httpClient() {
-        HttpClient httpClient = HttpClientBuilder.create().setConnectionManager(new PoolingHttpClientConnectionManager()).build();
+        HttpClient httpClient = HttpClientBuilder.create()
+                .setConnectionManager(new PoolingHttpClientConnectionManager()).build();
         return httpClient;
     }
 
