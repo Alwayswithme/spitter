@@ -33,4 +33,15 @@
     select id, owner_id, name, type
     from Device
   </select>
+
+  <select id="selectByCondition" resultType="map" >
+    SELECT
+      id,
+      IF (display_phone, phone, '---') AS phone,
+      IF (display_name, name, '---') AS name
+    FROM Gateway
+    WHERE
+      (name REGEXP #{keyword} AND display_name = 1)
+      OR (phone REGEXP #{keyword} AND display_phone = 1);
+  </select>
 </mapper>
