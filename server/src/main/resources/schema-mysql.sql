@@ -48,3 +48,17 @@ CREATE TABLE IF NOT EXISTS DeviceList_Machine (
   `devicelist_id` INT,
   `machine_id` INT
 );
+
+CREATE TABLE IF NOT EXISTS user (
+  `user_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `name` VARCHAR(30),
+  `email` VARCHAR(30),
+  `company` VARCHAR(30)
+);
+
+CREATE TABLE IF NOT EXISTS user_privacy (
+  `user_id` INT PRIMARY KEY ,
+  `hide_name` BOOLEAN DEFAULT FALSE ,
+  `hide_email` BOOLEAN DEFAULT FALSE ,
+  `hide_company` BOOLEAN DEFAULT FALSE
+)
