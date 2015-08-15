@@ -4,8 +4,8 @@
   "description": "Spitter Client Module",
   "main": "index.js",
   "dependencies": {
-    "bootstrap": "^3.3.5",
     "react": "^0.13.3",
+    "semantic-ui-css": "^2.0.8",
     "webpack-dev-server": "^1.10.1"
   },
   "devDependencies": {
@@ -15,7 +15,10 @@
     "css-loader": "^0.15.5",
     "csscomb": "^3.1.8",
     "cssnext": "^1.8.2",
+    "expose-loader": "^0.7.0",
     "file-loader": "^0.8.4",
+    "imports-loader": "^0.6.4",
+    "jquery": "^2.1.4",
     "postcss": "^4.1.16",
     "postcss-loader": "^0.5.1",
     "postcss-nested": "^0.3.2",

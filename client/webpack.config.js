@@ -3,19 +3,31 @@ var webpack = require('webpack');
 var node_modules = path.resolve(__dirname, 'node_modules');
 
 var deps = [
-    'react/dist/react.min.js'
+    'react/dist/react.min.js',
+    'jquery/dist/jquery.min.js'
 ];
 
 var config = {
 
     entry: {
-        app: path.resolve(__dirname, 'src/main.js'),
-        vendors: ['react']
+        app: [
+            'webpack/hot/dev-server',
+            path.resolve(__dirname, 'src/main.js'),
+            path.resolve(node_modules, 'semantic-ui-css/semantic.min.css')
+        ],
+
+        vendors: [
+            'react',
+            'jquery',
+            'semantic-ui-css/semantic.min.js'
+        ]
     },
 
     resolve: {
-        alias: {}
+        alias: {},
+        modulesDirectories: ['node_modules']
     },
+
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
@@ -23,12 +35,26 @@ var config = {
 
     module: {
         loaders: [
-            {test: /\.jsx?$/, loader: 'babel-loader'},
-            {test: /\.css$/, loader: 'style-loader!css-loader!postcss-loader'},
+
+            { test: path.resolve(node_modules, deps[1]), loader: "expose?jQuery"},
+            { test: path.resolve(node_modules, deps[0]), loader: "expose?React"},
+
+            {test: /\.jsx?$/, loader: 'babel'},
+            {test: /\.css$/, loader: 'style!css!postcss'},
             {test: /\.(png|jpg)$/, loader: 'url?limit=25000'},
-            {test: /\.woff$/, loader: 'url?limit=100000'}
+
+            { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
+            { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff2" },
+            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
+            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
+            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" }
+
+
         ],
-        noParse: []
+
+        noParse: [
+            ///\.min\.js/
+        ]
     },
 
     plugins: [

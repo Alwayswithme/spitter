@@ -1,8 +1,6 @@
-"use strict";
-require('./main.css');
-
-var React = require('react');
-var Hello = require('./component.jsx');
+'use strict';
+var a = require('semantic-ui-css/semantic.min.js');
+var Hello = require('./hello.jsx');
 
 
 function main() {

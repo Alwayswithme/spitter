@@ -49,6 +49,4 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(Application.class);
     }
 
-    public static class SchedulerConfig {
-    }
 }

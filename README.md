@@ -7,7 +7,7 @@ A toy project I use to messing thing up.
 * [MyBatis](https://mybatis.github.io/)
 * [MariaDB](https://mariadb.org/)
 * [Lombok](https://projectlombok.org/)
-* [Bootstrap](http://getbootstrap.com/)
+* [Semantic UI](http://semantic-ui.com/)
 * [Flux](http://facebook.github.io/flux/)
 * [React](https://facebook.github.io/react/)
 * [Webpack](http://webpack.github.io/)
