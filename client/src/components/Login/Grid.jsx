@@ -12,7 +12,7 @@ module.exports = React.createClass({
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui teal image header">
-                        <img src="./public/images/logo.png" className="image"/>
+                        <img src={require('./../../public/images/logo.png')} className="image"/>
 
                         <div className="content">
                             Log-in to your account
