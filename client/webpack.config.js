@@ -11,9 +11,9 @@ var config = {
 
     entry: {
         app: [
+            //path.resolve(node_modules, 'semantic-ui-css/semantic.min.css'),
             'webpack/hot/dev-server',
-            path.resolve(__dirname, 'src/main.js'),
-            path.resolve(node_modules, 'semantic-ui-css/semantic.min.css')
+            path.resolve(__dirname, 'src/main.js')
         ],
 
         vendors: [
@@ -41,7 +41,17 @@ var config = {
 
             {test: /\.jsx?$/, loader: 'babel'},
             {test: /\.css$/, loader: 'style!css!postcss'},
-            {test: /\.(png|jpg)$/, loader: 'url?limit=25000'},
+
+            {
+                test: /\.gif/,
+                loader: 'url-loader?limit=10000&mimetype=image/gif'
+            }, {
+                test: /\.jpg/,
+                loader: 'url-loader?limit=10000&mimetype=image/jpg'
+            }, {
+                test: /\.png/,
+                loader: 'url-loader?limit=10000&mimetype=image/png'
+            },
 
             { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
             { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff2" },

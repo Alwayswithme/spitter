@@ -1,10 +1,12 @@
 'use strict';
-var a = require('semantic-ui-css/semantic.min.js');
-var Hello = require('./hello.jsx');
 
+require('semantic-ui-css/semantic.min.css');
+require('./main.css');
+
+var LoginGrid = require('./components/Login/Grid.jsx');
 
 function main() {
-    React.render(<Hello />, document.getElementById('app'));
+    React.render(<LoginGrid />, document.getElementById('app'));
 }
 
 main();

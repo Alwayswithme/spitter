@@ -1,5 +1,5 @@
 *.class
-target/*
+*/target/*
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -15,5 +15,5 @@ hs_err_pid*
 .idea/*
 *.iml
 
-node_modules/*
-build/*
+*/node_modules/*
+*/build/*

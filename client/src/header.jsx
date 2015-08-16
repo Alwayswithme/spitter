@@ -3,9 +3,10 @@
 var Header = React.createClass({
     render: function() {
         return (
-            <div className="ui row">
-                <div className="ui column">
-                    <h1 className="ui header">Hello React!</h1>
+            <div className="row">
+                <div className="column left icon">
+                    <i className="users icon"/>
+                    <h1 className="header">Hello React!</h1>
                 </div>
             </div>
         );
