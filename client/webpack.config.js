@@ -37,6 +37,7 @@ var config = {
         loaders: [
 
             { test: path.resolve(node_modules, deps[1]), loader: "expose?jQuery"},
+            { test: path.resolve(node_modules, deps[1]), loader: "expose?$"},
             { test: path.resolve(node_modules, deps[0]), loader: "expose?React"},
 
             {test: /\.jsx?$/, loader: 'babel'},

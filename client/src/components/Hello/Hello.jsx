@@ -1,7 +1,7 @@
 'use strict';
-var Header = require('./header.jsx');
-var Message = require('./message.jsx');
-var Dropdown = require('./dropdown.jsx');
+var Header = require('./Header.jsx');
+var Message = require('./Message.jsx');
+var Dropdown = require('./Dropdown.jsx');
 
 var Hello = React.createClass({
     render() {

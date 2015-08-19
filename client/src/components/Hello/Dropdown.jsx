@@ -1,6 +1,16 @@
 "use strict";
 
 module.exports = React.createClass({
+    componentDidMount: function() {
+        $(document).ready(function() {
+                $('.ui.selection.dropdown').dropdown();
+                $('.ui.menu .ui.dropdown').dropdown({
+                    on: 'hover'
+                });
+            })
+        ;
+    },
+
     render: function() {
         return (
             <div className="row">

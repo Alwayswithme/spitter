@@ -5,8 +5,10 @@ require('./main.css');
 
 var LoginGrid = require('./components/Login/Grid.jsx');
 
+var Hello = require('./components/Hello/Hello.jsx');
+
 function main() {
-    React.render(<LoginGrid />, document.getElementById('app'));
+    React.render(<Hello />, document.getElementById('app'));
 }
 
 main();
