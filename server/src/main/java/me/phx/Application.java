@@ -24,9 +24,9 @@ public class Application extends SpringBootServletInitializer {
     public static void main(String[] args) {
         ctx = SpringApplication.run(Application.class, args);
 
-//        for (String s : ctx.getBeanDefinitionNames()) {
-//            System.out.println(s);
-//        }
+        for (String s : ctx.getBeanDefinitionNames()) {
+            System.out.println(s);
+        }
     }
 
     @Bean
