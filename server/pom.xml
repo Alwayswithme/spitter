@@ -47,7 +47,6 @@
       <scope>provided</scope>
     </dependency>
 
-
     <!-- Mybatis -->
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -65,6 +64,10 @@
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jdk8</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -72,6 +75,12 @@
       <version>18.0</version>
     </dependency>
 
+    <!-- Shiro -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-all</artifactId>
+      <version>1.2.4</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>

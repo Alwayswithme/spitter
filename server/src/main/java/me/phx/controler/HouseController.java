@@ -2,6 +2,7 @@ package me.phx.controler;
 
 import me.phx.mapper.HouseMapper;
 import me.phx.model.House;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,8 @@ public class HouseController {
     @Autowired
     private HouseMapper houseMapper;
 
-    @RequestMapping(value = "selectHouseAsMaps", method = RequestMethod.POST)
+    @RequiresRoles("admin")
+    @RequestMapping(value = "selectHouseAsMaps", method = RequestMethod.GET)
     public RestObject selectHouseAsMaps() {
         RestObject r = new RestObject();
         r.setOk(true);
@@ -30,12 +32,12 @@ public class HouseController {
         return r;
     }
 
-    @RequestMapping(value = "selectHouseAsObject", method = RequestMethod.POST)
+    @RequestMapping(value = "selectHouseAsObject", method = RequestMethod.GET)
     public List<House> selectHouseAsObject() {
         return houseMapper.selectAll();
     }
 
-    @RequestMapping(value = "selectHouseWithOwner", method = RequestMethod.POST)
+    @RequestMapping(value = "selectHouseWithOwner", method = RequestMethod.GET)
     public List<House> selectHouseWithOwner() {
         return houseMapper.selectHouseWithOwner();
     }

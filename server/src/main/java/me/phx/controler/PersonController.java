@@ -6,8 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +18,7 @@ import java.util.Map;
  * @author phoenix
  */
 @RestController
-@RequestMapping(value = "/person")
+@RequestMapping("/person")
 public class PersonController {
 
     @Autowired
@@ -28,12 +26,12 @@ public class PersonController {
     @Autowired
     private SqlSession sqlSession;
 
-    @RequestMapping(value = "selectAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectAll", method = RequestMethod.GET)
     public List<Person> selectAll() throws IOException {
         return personMapper.selectAll();
     }
 
-    @RequestMapping(value = "selectById/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectById/{id}", method = RequestMethod.GET)
     public Person selectPersonWithDevices(@PathVariable int id) {
 //        return mapper.selectPersonWithDevices(id);         // use annotation
 
@@ -48,7 +46,7 @@ public class PersonController {
 //        return p;
 //    }
 
-    @RequestMapping(value = "selectAllAsMap", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
         return sqlSession.selectMap("me.phx.mapper.BaseMapper.selectAll", "name");
 
@@ -69,7 +67,7 @@ public class PersonController {
 //        return personMapper.count();
 //    }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(value = "insert", method = RequestMethod.POST, consumes = "application/json")
     public Person insert(@RequestBody Person person) throws IOException {
         personMapper.insert(person);
@@ -77,7 +75,7 @@ public class PersonController {
         return person;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "deleteById/{id}", method = RequestMethod.GET)
     public int deleteOne(@PathVariable int id) throws IOException {
         Integer deleteCount = personMapper.deleteByPrimaryKey(id);
