@@ -6,7 +6,6 @@ import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.AnonymousFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.PointcutAdvisor;
@@ -17,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,15 +42,14 @@ public class ShiroConfig {
         ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         filterFactoryBean.setSecurityManager(securityManager());
 
+        filterFactoryBean.setLoginUrl("/login");
+        filterFactoryBean.setSuccessUrl("/");
+
         Map<String, String> filterChainMappings = new HashMap<>();
-        filterChainMappings.put("/", "anon");
+        filterChainMappings.put("/login", "anon");
+        filterChainMappings.put("/house/**", "authc");
         filterFactoryBean.setFilterChainDefinitionMap(filterChainMappings);
         return filterFactoryBean;
-    }
-
-    @Bean
-    public Filter anon() {
-        return new AnonymousFilter();
     }
 
     @Bean

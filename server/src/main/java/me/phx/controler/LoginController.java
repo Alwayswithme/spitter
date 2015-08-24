@@ -4,26 +4,56 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @RestController
 public class LoginController {
 
-    @RequestMapping("/login")
-    public void login(@RequestParam String username, @RequestParam String password) {
+    @Autowired
+    RestTemplate restTemplate;
+
+    @RequestMapping("/")
+    public String home() {
+        return "welcome";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "please login";
+    }
+
+    @RequestMapping(value = "test")
+    public void run3() throws Exception {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/login");
+        String url = builder.build().encode().toString();
+
+        UsernamePasswordToken token = new UsernamePasswordToken();
+        token.setUsername("guest");
+        token.setPassword("guest".toCharArray());
+        token.setRememberMe(false);
+        restTemplate.postForLocation(url, token);
+        return ;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public void loginPost(@RequestBody UsernamePasswordToken token) {
         Subject currentUser = SecurityUtils.getSubject();
 
         if (!currentUser.isAuthenticated()) {
             //collect user principals and credentials in a gui specific manner
             //such as username/password html form, X509 certificate, OpenID, etc.
             //We'll use the username/password example here since it is the most common.
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
             //this is all you have to do to support 'remember me' (no config - built in!):
-            token.setRememberMe(true);
+//            token.setRememberMe(rememberMe);
 
             try {
                 currentUser.login( token );

@@ -38,7 +38,7 @@ public class JsonController {
 
     @RequestMapping(value = "consume", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Person consume(@RequestBody Device device,
-                          @RequestParam String jwt) {
+                          @RequestParam(required = false, defaultValue = "secret") String jwt) {
         System.out.println("===> 接受到 object <" + device + ">");
         Person person = personMapper.selectByPrimaryKey(device.getOwnerId());
         System.out.println("===> 发送了 object <" + person + ">");
