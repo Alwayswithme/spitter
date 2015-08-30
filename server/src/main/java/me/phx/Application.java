@@ -10,8 +10,8 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -59,16 +59,13 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public RedisTemplate redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
-        return redisTemplate;
-    }
-
-    @Bean
-    public StringRedisTemplate stringRedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
-        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(jedisConnectionFactory);
+    public StringRedisTemplate stringRedisTemplate() {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(jedisConnectionFactory());
         return stringRedisTemplate;
     }
 
+    @Bean
+    public RedisAtomicInteger redisAtomicInteger() {
+        return new RedisAtomicInteger("counter", jedisConnectionFactory());
+    }
 }

@@ -1,7 +1,9 @@
 package me.phx.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,14 +18,14 @@ import javax.annotation.Resource;
 @RequestMapping("/redis")
 public class RedisController {
 
-    @Autowired
-    RedisTemplate redisTemplate;
-
-    @Resource(name = "redisTemplate")
+    @Resource(name = "stringRedisTemplate")
     ValueOperations<String, String> valueOperations;
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedisAtomicInteger redisAtomicInteger;
 
     @RequestMapping(value = "/run1")
     public void run1() {
@@ -40,18 +42,16 @@ public class RedisController {
 
     @RequestMapping(value = "/run2")
     public void run2() {
-        String key = "connections";
 
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key, "10");
-        System.out.println(valueOperations.get(key));
-        if (redisTemplate.hasKey(key)) {
-            System.out.println(valueOperations.increment(key, 1));
-            System.out.println(valueOperations.increment(key, 1));
+        System.out.println(redisAtomicInteger.get());
+        redisAtomicInteger.set(10);
+        System.out.println(redisAtomicInteger.get());
 
-            redisTemplate.delete(key);
+        System.out.println(redisAtomicInteger.incrementAndGet());
+        System.out.println(redisAtomicInteger.getAndIncrement());
 
-            System.out.println(valueOperations.increment(key, 1));
-        }
+
+        System.out.println(redisAtomicInteger.getAndSet(0));
+        System.out.println(redisAtomicInteger.get());
     }
 }

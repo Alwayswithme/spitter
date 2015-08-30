@@ -4,7 +4,7 @@
 
   <groupId>me.phx</groupId>
   <artifactId>spitter</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${project.version}</version>
   <packaging>pom</packaging>
 
   <name>My Little Toy Project</name>
@@ -22,6 +22,7 @@
   </modules>
 
   <properties>
+    <project.version>1.0-SNAPSHOT</project.version>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
