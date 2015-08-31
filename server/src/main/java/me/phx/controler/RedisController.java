@@ -1,10 +1,7 @@
 package me.phx.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -122,5 +119,25 @@ public class RedisController {
         System.out.println(opsForSet.isMember(key, "reflexes"));
         System.out.println(opsForSet.members(key));
 
+        String key2 = "birdpowers";
+        System.out.println(opsForSet.add(key2, "flight"));
+        System.out.println(opsForSet.add(key2, "pecking"));
+        System.out.println(opsForSet.union(key, key2));
+    }
+
+    @RequestMapping("run7")
+    public void run7() throws InterruptedException {
+        String key = "hackers";
+        ZSetOperations<String, String> opsForZSet = stringRedisTemplate.opsForZSet();
+
+        System.out.println(opsForZSet.add(key, "Alan Kay", 1940));
+        System.out.println(opsForZSet.add(key, "Grace Hopper", 1906));
+        System.out.println(opsForZSet.add(key, "Richard Stallman", 1953));
+        System.out.println(opsForZSet.add(key, "Yukihiro Matsumoto", 1965));
+        System.out.println(opsForZSet.add(key, "Claude Shannon", 1916));
+        System.out.println(opsForZSet.add(key, "Linus Torvalds", 1969));
+        System.out.println(opsForZSet.add(key, "Sophie Wilson", 1957));
+        System.out.println(opsForZSet.add(key, "Alan Turing", 1912));
+        System.out.println(opsForZSet.range(key, 2, 4));
     }
 }
