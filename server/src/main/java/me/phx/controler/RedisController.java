@@ -2,6 +2,7 @@ package me.phx.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
@@ -102,5 +103,24 @@ public class RedisController {
         System.out.println(opsForList.range(key, 0, -1));
         System.out.println(opsForList.range(key, 0, 1));
         System.out.println(opsForList.range(key, 1, 2));
+
+        System.out.println(opsForList.leftPop(key));
+        System.out.println(opsForList.rightPop(key));
+        System.out.println(opsForList.range(key, 0, -1));
+    }
+
+    @RequestMapping("run6")
+    public void run6() throws InterruptedException {
+        String key = "superpowers";
+        SetOperations<String, String> opsForSet = stringRedisTemplate.opsForSet();
+
+        System.out.println(opsForSet.add(key, "flight"));
+        System.out.println(opsForSet.add(key, "x-ray vision"));
+        System.out.println(opsForSet.add(key, "reflexes"));
+        System.out.println(opsForSet.remove(key, "reflexes"));
+        System.out.println(opsForSet.isMember(key, "flight"));
+        System.out.println(opsForSet.isMember(key, "reflexes"));
+        System.out.println(opsForSet.members(key));
+
     }
 }
