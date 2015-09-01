@@ -1,5 +1,6 @@
 package me.phx.controler;
 
+import com.google.common.collect.ImmutableBiMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
@@ -140,4 +141,31 @@ public class RedisController {
         System.out.println(opsForZSet.add(key, "Alan Turing", 1912));
         System.out.println(opsForZSet.range(key, 2, 4));
     }
+
+    @RequestMapping("run8")
+    public void run8() throws InterruptedException {
+        String key = "user:1000";
+        HashOperations<String, Object, Object> opsForHash = stringRedisTemplate.opsForHash();
+
+        opsForHash.put(key, "name", "Johm Smith");
+        opsForHash.put(key, "email", "john.smith@example.com");
+        opsForHash.put(key, "password", "s3cret");
+        System.out.println(opsForHash.entries(key));
+
+
+        String key1 = "user:1001";
+        opsForHash.putAll(key1,
+                ImmutableBiMap.of("name", "Mary Jones",
+                        "password", "hidden", "email",
+                        "mjones@example.com"));
+        System.out.println(opsForHash.get(key1, "name"));
+
+        opsForHash.put(key, "visits", "10");
+        System.out.println(opsForHash.increment(key, "visits", 1));
+        System.out.println(opsForHash.increment(key, "visits", 10));
+
+        opsForHash.delete(key, "visits");
+        System.out.println(opsForHash.increment(key, "visits", 1));
+    }
+
 }
