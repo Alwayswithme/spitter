@@ -24,6 +24,16 @@ public class RedisController {
 
     @Resource(name = "stringRedisTemplate")
     ListOperations<String, String> listOperations;
+
+    @Resource(name = "stringRedisTemplate")
+    SetOperations<String, String> setOperations;
+
+    @Resource(name = "stringRedisTemplate")
+    ZSetOperations<String, String> zSetOperations;
+
+    @Resource(name = "stringRedisTemplate")
+    HashOperations<String, Object, Object> hashOperations;
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -111,62 +121,59 @@ public class RedisController {
     @RequestMapping("run6")
     public void run6() throws InterruptedException {
         String key = "superpowers";
-        SetOperations<String, String> opsForSet = stringRedisTemplate.opsForSet();
 
-        System.out.println(opsForSet.add(key, "flight"));
-        System.out.println(opsForSet.add(key, "x-ray vision"));
-        System.out.println(opsForSet.add(key, "reflexes"));
-        System.out.println(opsForSet.remove(key, "reflexes"));
-        System.out.println(opsForSet.isMember(key, "flight"));
-        System.out.println(opsForSet.isMember(key, "reflexes"));
-        System.out.println(opsForSet.members(key));
+        System.out.println(setOperations.add(key, "flight"));
+        System.out.println(setOperations.add(key, "x-ray vision"));
+        System.out.println(setOperations.add(key, "reflexes"));
+        System.out.println(setOperations.remove(key, "reflexes"));
+        System.out.println(setOperations.isMember(key, "flight"));
+        System.out.println(setOperations.isMember(key, "reflexes"));
+        System.out.println(setOperations.members(key));
 
         String key2 = "birdpowers";
-        System.out.println(opsForSet.add(key2, "flight"));
-        System.out.println(opsForSet.add(key2, "pecking"));
-        System.out.println(opsForSet.union(key, key2));
+        System.out.println(setOperations.add(key2, "flight"));
+        System.out.println(setOperations.add(key2, "pecking"));
+        System.out.println(setOperations.union(key, key2));
     }
 
     @RequestMapping("run7")
     public void run7() throws InterruptedException {
         String key = "hackers";
-        ZSetOperations<String, String> opsForZSet = stringRedisTemplate.opsForZSet();
 
-        System.out.println(opsForZSet.add(key, "Alan Kay", 1940));
-        System.out.println(opsForZSet.add(key, "Grace Hopper", 1906));
-        System.out.println(opsForZSet.add(key, "Richard Stallman", 1953));
-        System.out.println(opsForZSet.add(key, "Yukihiro Matsumoto", 1965));
-        System.out.println(opsForZSet.add(key, "Claude Shannon", 1916));
-        System.out.println(opsForZSet.add(key, "Linus Torvalds", 1969));
-        System.out.println(opsForZSet.add(key, "Sophie Wilson", 1957));
-        System.out.println(opsForZSet.add(key, "Alan Turing", 1912));
-        System.out.println(opsForZSet.range(key, 2, 4));
+        System.out.println(zSetOperations.add(key, "Alan Kay", 1940));
+        System.out.println(zSetOperations.add(key, "Grace Hopper", 1906));
+        System.out.println(zSetOperations.add(key, "Richard Stallman", 1953));
+        System.out.println(zSetOperations.add(key, "Yukihiro Matsumoto", 1965));
+        System.out.println(zSetOperations.add(key, "Claude Shannon", 1916));
+        System.out.println(zSetOperations.add(key, "Linus Torvalds", 1969));
+        System.out.println(zSetOperations.add(key, "Sophie Wilson", 1957));
+        System.out.println(zSetOperations.add(key, "Alan Turing", 1912));
+        System.out.println(zSetOperations.range(key, 2, 4));
     }
 
     @RequestMapping("run8")
     public void run8() throws InterruptedException {
         String key = "user:1000";
-        HashOperations<String, Object, Object> opsForHash = stringRedisTemplate.opsForHash();
 
-        opsForHash.put(key, "name", "Johm Smith");
-        opsForHash.put(key, "email", "john.smith@example.com");
-        opsForHash.put(key, "password", "s3cret");
-        System.out.println(opsForHash.entries(key));
+        hashOperations.put(key, "name", "Johm Smith");
+        hashOperations.put(key, "email", "john.smith@example.com");
+        hashOperations.put(key, "password", "s3cret");
+        System.out.println(hashOperations.entries(key));
 
 
         String key1 = "user:1001";
-        opsForHash.putAll(key1,
+        hashOperations.putAll(key1,
                 ImmutableBiMap.of("name", "Mary Jones",
                         "password", "hidden",
                         "email", "mjones@example.com"));
-        System.out.println(opsForHash.get(key1, "name"));
+        System.out.println(hashOperations.get(key1, "name"));
 
-        opsForHash.put(key, "visits", "10");
-        System.out.println(opsForHash.increment(key, "visits", 1));
-        System.out.println(opsForHash.increment(key, "visits", 10));
+        hashOperations.put(key, "visits", "10");
+        System.out.println(hashOperations.increment(key, "visits", 1));
+        System.out.println(hashOperations.increment(key, "visits", 10));
 
-        opsForHash.delete(key, "visits");
-        System.out.println(opsForHash.increment(key, "visits", 1));
+        hashOperations.delete(key, "visits");
+        System.out.println(hashOperations.increment(key, "visits", 1));
     }
 
 }
