@@ -22,6 +22,8 @@ public class RedisController {
     @Resource(name = "stringRedisTemplate")
     ValueOperations<String, String> valueOperations;
 
+    @Resource(name = "stringRedisTemplate")
+    ListOperations<String, String> listOperations;
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -90,21 +92,20 @@ public class RedisController {
     @RequestMapping("run5")
     public void run5() throws InterruptedException {
         String key = "friends";
-        ListOperations<String, String> opsForList = stringRedisTemplate.opsForList();
 
-        System.out.println(opsForList.rightPush(key, "Alice"));
-        System.out.println(opsForList.rightPush(key, "Bob"));
-        System.out.println(opsForList.leftPush(key, "Sam"));
+        System.out.println(listOperations.rightPush(key, "Alice"));
+        System.out.println(listOperations.rightPush(key, "Bob"));
+        System.out.println(listOperations.leftPush(key, "Sam"));
 
-        System.out.println(opsForList.size(key));
+        System.out.println(listOperations.size(key));
 
-        System.out.println(opsForList.range(key, 0, -1));
-        System.out.println(opsForList.range(key, 0, 1));
-        System.out.println(opsForList.range(key, 1, 2));
+        System.out.println(listOperations.range(key, 0, -1));
+        System.out.println(listOperations.range(key, 0, 1));
+        System.out.println(listOperations.range(key, 1, 2));
 
-        System.out.println(opsForList.leftPop(key));
-        System.out.println(opsForList.rightPop(key));
-        System.out.println(opsForList.range(key, 0, -1));
+        System.out.println(listOperations.leftPop(key));
+        System.out.println(listOperations.rightPop(key));
+        System.out.println(listOperations.range(key, 0, -1));
     }
 
     @RequestMapping("run6")
@@ -156,8 +157,8 @@ public class RedisController {
         String key1 = "user:1001";
         opsForHash.putAll(key1,
                 ImmutableBiMap.of("name", "Mary Jones",
-                        "password", "hidden", "email",
-                        "mjones@example.com"));
+                        "password", "hidden",
+                        "email", "mjones@example.com"));
         System.out.println(opsForHash.get(key1, "name"));
 
         opsForHash.put(key, "visits", "10");
