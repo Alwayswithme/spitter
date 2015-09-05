@@ -47,6 +47,7 @@ public class ShiroConfig {
 
         Map<String, String> filterChainMappings = new HashMap<>();
         filterChainMappings.put("/login", "anon");
+        filterChainMappings.put("/logout", "logout");
         filterChainMappings.put("/house/**", "authc");
         filterFactoryBean.setFilterChainDefinitionMap(filterChainMappings);
         return filterFactoryBean;
