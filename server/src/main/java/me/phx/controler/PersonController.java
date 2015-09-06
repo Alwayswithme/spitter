@@ -1,5 +1,6 @@
 package me.phx.controler;
 
+import com.google.common.collect.Maps;
 import me.phx.mapper.PersonMapper;
 import me.phx.model.Person;
 import org.apache.ibatis.session.SqlSession;
@@ -48,7 +49,10 @@ public class PersonController {
 
     @RequestMapping(value = "/selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
-        return sqlSession.selectMap("me.phx.mapper.BaseMapper.selectAll", "name");
+
+        return Maps.uniqueIndex(personMapper.selectAll(), input -> {
+            return input.getAge();
+        });
 
 //        one-liner
 //        return sqlSession.selectMap("PersonMapper.selectAll", "age");
