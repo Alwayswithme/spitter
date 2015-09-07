@@ -2,6 +2,7 @@ package me.phx.config;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +72,14 @@ public class ShiroConfig {
     public Realm iniRealm() {
         IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
         return iniRealm;
+    }
+
+    @Bean
+    public Realm jdbcRealm(DataSource dataSource) {
+        JdbcRealm jdbcRealm = new JdbcRealm();
+        jdbcRealm.setDataSource(dataSource);
+        jdbcRealm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
+        return jdbcRealm;
     }
 
     // Enable Shiro Annotations for Spring-configured beans.  Only run after
