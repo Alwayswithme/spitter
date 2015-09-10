@@ -75,7 +75,14 @@ var config = {
     postcss: [
         require('postcss-nested')(),
         require('cssnext')()
-    ]
+    ],
+
+    devServer: {
+        port: 9090,
+        proxy: {
+            "/spitter/*": "http://localhost:8080"
+        }
+    }
 };
 
 deps.forEach(function (dep) {

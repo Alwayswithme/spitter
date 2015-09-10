@@ -4,7 +4,7 @@
 
   <groupId>me.phx</groupId>
   <artifactId>spitter</artifactId>
-  <version>${project.version}</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>My Little Toy Project</name>

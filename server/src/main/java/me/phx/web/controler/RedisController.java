@@ -2,6 +2,7 @@ package me.phx.web.controler;
 
 import com.google.common.collect.ImmutableBiMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @author ye
  */
 
+@Profile("redis")
 @RestController
 @RequestMapping("/redis")
 public class RedisController {

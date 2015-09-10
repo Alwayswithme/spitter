@@ -29,7 +29,7 @@
   "scripts": {
     "build": "webpack",
     "webpack": "webpack --progress --colors --watch",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base ./build"
   },
   "author": "PhoenixYip",
   "license": "ISC"

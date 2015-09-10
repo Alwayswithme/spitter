@@ -3,7 +3,6 @@ package me.phx.config;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
-import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -63,16 +62,16 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+//        securityManager.setRealm(iniRealm());
         securityManager.setSessionManager(new DefaultWebSessionManager());
-        securityManager.setRealm(iniRealm());
         return securityManager;
     }
-
-    @Bean
-    public Realm iniRealm() {
-        IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
-        return iniRealm;
-    }
+//
+//    @Bean
+//    public Realm iniRealm() {
+//        IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
+//        return iniRealm;
+//    }
 
     @Bean
     public Realm jdbcRealm(DataSource dataSource) {
