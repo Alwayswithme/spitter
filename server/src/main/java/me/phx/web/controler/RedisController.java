@@ -1,4 +1,4 @@
-package me.phx.controler;
+package me.phx.web.controler;
 
 import com.google.common.collect.ImmutableBiMap;
 import org.springframework.beans.factory.annotation.Autowired;

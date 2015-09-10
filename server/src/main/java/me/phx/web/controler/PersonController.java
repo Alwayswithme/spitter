@@ -1,9 +1,8 @@
-package me.phx.controler;
+package me.phx.web.controler;
 
 import com.google.common.collect.Maps;
-import me.phx.mapper.PersonMapper;
 import me.phx.model.Person;
-import org.apache.ibatis.session.SqlSession;
+import me.phx.mybatis.mapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author phoenix
@@ -24,8 +21,7 @@ public class PersonController {
 
     @Autowired
     PersonMapper personMapper;
-    @Autowired
-    private SqlSession sqlSession;
+
 
     @RequestMapping(value = "/selectAll", method = RequestMethod.GET)
     public List<Person> selectAll() throws IOException {

@@ -18,7 +18,7 @@ public class AsyncConfig implements AsyncConfigurer {
     @Bean(destroyMethod = "shutdown")
     public TaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(10);
+        scheduler.setPoolSize(5);
         scheduler.initialize();
         return scheduler;
     }
@@ -27,10 +27,9 @@ public class AsyncConfig implements AsyncConfigurer {
     public Executor getAsyncExecutor() {
         TaskScheduler taskScheduler = taskScheduler();
         ThreadPoolExecutor executor = ((ThreadPoolTaskScheduler) taskScheduler).getScheduledThreadPoolExecutor();
-        executor.setCorePoolSize(3);
+        executor.setCorePoolSize(5);
         executor.setMaximumPoolSize(10);
         return executor;
-
     }
 
     @Override

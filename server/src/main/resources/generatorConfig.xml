@@ -28,12 +28,12 @@
     </javaModelGenerator>
 
     <!--&lt;!&ndash; 生成XML Mapper &ndash;&gt;-->
-    <!--<sqlMapGenerator targetPackage="me.phx.mapper" targetProject="./src/main/resources">-->
+    <!--<sqlMapGenerator targetPackage="me.phx.mybatis.mapper" targetProject="./src/main/resources">-->
     <!--</sqlMapGenerator>-->
 
     <!--&lt;!&ndash; 生成Java Mapper 接口 &ndash;&gt;-->
-    <!--<javaClientGenerator targetPackage="me.phx.mapper" targetProject="./src/main/java" type="XMLMAPPER">-->
-      <!--<property name="rootInterface" value="me.phx.mapper.BaseMapper" />-->
+    <!--<javaClientGenerator targetPackage="me.phx.mybatis.mapper" targetProject="./src/main/java" type="XMLMAPPER">-->
+      <!--<property name="rootInterface" value="me.phx.mybatis.mapper.BaseMapper" />-->
     <!--</javaClientGenerator>-->
 
     <table tableName="Person">

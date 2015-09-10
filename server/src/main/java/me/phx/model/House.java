@@ -1,9 +1,7 @@
 package me.phx.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author phoenix
@@ -24,6 +22,7 @@ public class House extends AbstractEntity {
     private String ipAddress;
 
     private Person owner;
+
 
     public enum Size {
         SMALL,
