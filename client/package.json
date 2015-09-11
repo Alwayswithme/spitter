@@ -22,6 +22,7 @@
     "postcss": "^4.1.16",
     "postcss-loader": "^0.5.1",
     "postcss-nested": "^0.3.2",
+    "strict-loader": "^0.1.2",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.10.5"

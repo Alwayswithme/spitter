@@ -1,4 +1,3 @@
-'use strict';
 var Header = require('./Header.jsx');
 var Message = require('./Message.jsx');
 var Dropdown = require('./Dropdown.jsx');

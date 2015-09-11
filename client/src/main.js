@@ -1,5 +1,3 @@
-'use strict';
-
 require('semantic-ui-css/semantic.min.css');
 require('./main.css');
 

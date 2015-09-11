@@ -10,7 +10,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @EnableScheduling
 @Configuration
-@ConditionalOnProperty("enable.schedule")
+@ConditionalOnProperty("my.enable.schedule")
 public class ScheduleConfig implements SchedulingConfigurer {
 
     @Autowired

@@ -3,8 +3,8 @@ var webpack = require('webpack');
 var node_modules = path.resolve(__dirname, 'node_modules');
 
 var deps = [
-    'react/dist/react.min.js',
-    'jquery/dist/jquery.min.js'
+    'react',
+    'jquery'
 ];
 
 var config = {
@@ -40,7 +40,7 @@ var config = {
             { test: path.resolve(node_modules, deps[1]), loader: "expose?$"},
             { test: path.resolve(node_modules, deps[0]), loader: "expose?React"},
 
-            {test: /\.jsx?$/, loader: 'babel'},
+            {test: /\.jsx?$/, loader: 'babel!strict'},
             {test: /\.css$/, loader: 'style!css!postcss'},
 
             {
@@ -80,7 +80,8 @@ var config = {
     devServer: {
         port: 9090,
         proxy: {
-            "/spitter/*": "http://localhost:8080"
+            //"*": "http://localhost:9090",
+            "/api/*": "http://localhost:8080",
         }
     }
 };

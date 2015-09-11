@@ -5,10 +5,13 @@
   <parent>
     <artifactId>spitter</artifactId>
     <groupId>me.phx</groupId>
-    <version>${project.version}</version>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
+
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>me.phx</groupId>
   <artifactId>spitter-client</artifactId>
   <packaging>jar</packaging>
 

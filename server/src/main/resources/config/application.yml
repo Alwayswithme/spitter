@@ -1,0 +1,32 @@
+spring:
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    serialization:
+      indent_output: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/spitter
+    username: root
+    password: cloudSoft@Skybility
+
+
+logging:
+  level:
+    me.phx.mybatis.mapper: INFO
+    org:
+      springframework:
+        web: DEBUG
+      apache:
+        ibatis: INFO
+        http: DEBUG
+        http.wire: DEBUG
+        commons:
+          logging:
+            simplelog:
+              showdatetime: true
+              log.org.apache.http: DEBUG
+
+---
+my:
+  enable:
+    schedule: false

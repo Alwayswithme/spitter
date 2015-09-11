@@ -46,9 +46,8 @@ public class PersonController {
     @RequestMapping(value = "/selectAllAsMap", method = RequestMethod.GET)
     public Map<Integer, Person> selectAllAsMap() throws IOException {
 
-        return Maps.uniqueIndex(personMapper.selectAll(), input -> {
-            return input.getAge();
-        });
+        List<Person> people = personMapper.selectAll();
+        return Maps.uniqueIndex(people, Person::getAge);
 
 //        one-liner
 //        return sqlSession.selectMap("PersonMapper.selectAll", "age");

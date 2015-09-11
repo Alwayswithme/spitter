@@ -1,5 +1,3 @@
-"use strict";
-
 var Header = React.createClass({
     render: function() {
         return (

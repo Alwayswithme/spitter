@@ -1,5 +1,3 @@
-"use strict";
-
 require('./Login.css');
 
 var LoginForm = require('./Form.jsx');

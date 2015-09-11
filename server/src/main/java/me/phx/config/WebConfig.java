@@ -1,6 +1,9 @@
 package me.phx.config;
 
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.*;
 
 
@@ -8,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.*;
  * @author phoenix
  */
 @Configuration
-@EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     // equivalent for <mvc:default-servlet-handler/> tag
@@ -27,5 +29,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/static/index.html");
+    }
+
+    @Bean
+    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
+        ServletRegistrationBean registration = new ServletRegistrationBean(
+                dispatcherServlet);
+        registration.addUrlMappings("/api/*");
+        return registration;
     }
 }
