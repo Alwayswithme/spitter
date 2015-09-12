@@ -1,9 +1,10 @@
-package me.phx.mybatis;
+package me.phx;
 
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.config.TableConfiguration;
 
 import java.util.List;
 
@@ -38,7 +39,11 @@ public class TypeAliasPlugin extends PluginAdapter {
     private void addTypeAlias(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         topLevelClass.addImportedType(typeAlias);
 
-        String aliasStr = String.format("@Alias(\"%s\")", topLevelClass.getClass().getSimpleName());
-        topLevelClass.addAnnotation(aliasStr);
+        TableConfiguration tableConfiguration = introspectedTable.getTableConfiguration();
+
+        String domainObjectName = tableConfiguration.getDomainObjectName();
+        String alias = domainObjectName == null ? tableConfiguration.getTableName() : domainObjectName;
+        String aliasAnnotation = String.format("@Alias(\"%s\")", alias);
+        topLevelClass.addAnnotation(aliasAnnotation);
     }
 }

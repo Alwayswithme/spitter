@@ -23,7 +23,7 @@ logging:
         commons:
           logging:
             simplelog:
-              showdatetime: true
+              showdatetime: DEBUG
               log.org.apache.http: DEBUG
 
 ---

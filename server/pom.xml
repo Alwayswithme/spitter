@@ -10,7 +10,6 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <groupId>me.phx</groupId>
   <packaging>war</packaging>
   <artifactId>spitter-server</artifactId>
 
@@ -146,6 +145,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>me.phx</groupId>
+            <artifactId>mybatis-alias-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
           </dependency>
         </dependencies>
         <configuration>

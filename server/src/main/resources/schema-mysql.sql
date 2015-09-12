@@ -1,64 +1,25 @@
+CREATE DATABASE IF NOT EXISTS spitter;
 USE spitter;
 
-DROP TABLE Device;
-DROP TABLE House;
-DROP TABLE Person;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS threads;
 
-CREATE TABLE IF NOT EXISTS Person (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(50) NOT NULL,
-  `age` TINYINT NOT NULL DEFAULT 1,
-  `created_date` DATETIME NOT NULL
-);
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
+  `thread_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `text` varchar(1024) NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT '0',
+  `ip_address` varbinary(16) NOT NULL,
+  `voters` blob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS House (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `owner_id` INT(11),
-  `size` TINYINT NOT NULL,
-  `location` VARCHAR(50) NOT NULL,
-  `ip_address` VARBINARY(16) NOT NULL,
-  FOREIGN KEY (owner_id) REFERENCES Person(id)
-);
-
-CREATE TABLE IF NOT EXISTS Device (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `owner_id` INT(11),
-  `name` VARCHAR(20) NOT NULL,
-  `type` TINYINT NOT NULL,
-  FOREIGN KEY (owner_id) REFERENCES Person(id) ON DELETE CASCADE ON UPDATE CASCADE 
-);
-
-CREATE TABLE IF NOT EXISTS Gateway (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(20)
-);
-
-CREATE TABLE IF NOT EXISTS DeviceList (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(20)
-);
-
-CREATE TABLE IF NOT EXISTS Machine (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `name` VARCHAR(20),
-  `gateway_id` INT
-);
-
-CREATE TABLE IF NOT EXISTS DeviceList_Machine (
-  `devicelist_id` INT,
-  `machine_id` INT
-);
-
-CREATE TABLE IF NOT EXISTS user (
-  `user_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `name` VARCHAR(30),
-  `email` VARCHAR(30),
-  `company` VARCHAR(30)
-);
-
-CREATE TABLE IF NOT EXISTS user_privacy (
-  `user_id` INT PRIMARY KEY ,
-  `hide_name` BOOLEAN DEFAULT FALSE ,
-  `hide_email` BOOLEAN DEFAULT FALSE ,
-  `hide_company` BOOLEAN DEFAULT FALSE
-)
+CREATE TABLE `threads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

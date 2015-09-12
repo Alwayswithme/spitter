@@ -9,9 +9,11 @@
   <context id="MySQL" targetRuntime="MyBatis3Simple" >
     <property name="beginningDelimiter" value="`"/>
     <property name="endingDelimiter" value="`"/>
-    <!-- 控制注释生成 -->
+
+    <plugin type="me.phx.LombokPlugin" />
+    <plugin type="me.phx.TypeAliasPlugin" />
+
     <commentGenerator>
-      <property name="suppressAllComments" value="true"/>
       <property name="suppressDate" value="true"/>
     </commentGenerator>
 
@@ -27,30 +29,23 @@
       <property name="rootClass" value="me.phx.model.AbstractEntity"/>
     </javaModelGenerator>
 
-    <!--&lt;!&ndash; 生成XML Mapper &ndash;&gt;-->
-    <!--<sqlMapGenerator targetPackage="me.phx.mybatis.mapper" targetProject="./src/main/resources">-->
-    <!--</sqlMapGenerator>-->
+    <!-- 生成XML Mapper -->
+    <sqlMapGenerator targetPackage="me.phx.mybatis.mapper" targetProject="./src/main/resources">
+    </sqlMapGenerator>
 
-    <!--&lt;!&ndash; 生成Java Mapper 接口 &ndash;&gt;-->
+    <!-- 生成Java Mapper 接口 -->
     <!--<javaClientGenerator targetPackage="me.phx.mybatis.mapper" targetProject="./src/main/java" type="XMLMAPPER">-->
       <!--<property name="rootInterface" value="me.phx.mybatis.mapper.BaseMapper" />-->
     <!--</javaClientGenerator>-->
 
-    <table tableName="Person">
+
+    <table tableName="topics" domainObjectName="Topic">
       <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-      <columnOverride column="created_date" javaType="java.time.LocalDateTime"/>
     </table>
 
-    <!--<table tableName="Device" domainObjectName="Device"  >-->
-      <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
-      <!--<columnOverride column="type" property="type" javaType="Type"/>-->
-    <!--</table>-->
-
-    <!--<table tableName="House" >-->
-      <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
-      <!--<columnOverride column="size" property="size" javaType="Size"/>-->
-      <!--<columnOverride column="ip_address"  javaType="java.lang.String"/>-->
-    <!--</table>-->
-
+    <table tableName="comments" domainObjectName="Comment" modelType="flat">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="created" javaType="java.time.LocalDateTime" />
+    </table>
   </context>
 </generatorConfiguration>

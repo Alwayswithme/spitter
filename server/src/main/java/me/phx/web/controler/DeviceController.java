@@ -1,7 +1,9 @@
 package me.phx.web.controler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import me.phx.model.Comment;
 import me.phx.mybatis.mapper.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author phoenix
  */
-@Log
+@Slf4j
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
@@ -25,4 +27,13 @@ public class DeviceController {
 //        List<Device> devices = deviceMapper.selectDevicesByOwner(ownerId);
 //        return devices;
 //    }
+
+    @RequestMapping("/test")
+    public Comment test() throws JsonProcessingException {
+        Comment c = new Comment();
+        c.setId(1).setAuthor("hhh");
+
+        String s = objectMapper.writeValueAsString(c);
+        return c;
+    }
 }
