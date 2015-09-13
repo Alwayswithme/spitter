@@ -1,5 +1,6 @@
 package me.phx.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -84,6 +85,7 @@ public class Comment extends AbstractEntity {
      *
      * @mbggenerated
      */
+    @JsonIgnore
     private byte[] ipAddress;
 
     /**
@@ -92,6 +94,7 @@ public class Comment extends AbstractEntity {
      *
      * @mbggenerated
      */
+    @JsonIgnore
     private byte[] voters;
 
 }
