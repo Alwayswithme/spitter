@@ -4,9 +4,9 @@
     "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <classPathEntry location="/home/phoenix/Documents/workspace/spitter/server/target/classes/"/>
+  <classPathEntry location="/home/ye/Documents/java/spitter/server/target/classes/"/>
 
-  <context id="MySQL" targetRuntime="MyBatis3Simple" >
+  <context id="MySQL" targetRuntime="MyBatis3Simple">
     <property name="beginningDelimiter" value="`"/>
     <property name="endingDelimiter" value="`"/>
 
@@ -20,8 +20,8 @@
     <jdbcConnection
         driverClass="com.mysql.jdbc.Driver"
         connectionURL="jdbc:mysql://localhost/spitter"
-        userId="root"
-        password="cloudSoft@Skybility">
+        userId="ye"
+        password="pass">
     </jdbcConnection>
 
     <!-- 生成Java 实体 -->

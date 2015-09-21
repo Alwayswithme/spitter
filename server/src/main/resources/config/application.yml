@@ -6,8 +6,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost/spitter
-    username: root
-    password: cloudSoft@Skybility
+    username: ye
+    password: pass
 
 
 logging:

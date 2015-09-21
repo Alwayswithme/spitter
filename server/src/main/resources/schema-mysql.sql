@@ -2,12 +2,12 @@ CREATE DATABASE IF NOT EXISTS spitter;
 USE spitter;
 
 DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS threads;
+DROP TABLE IF EXISTS topics;
 
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
-  `thread_id` int(11) NOT NULL,
+  `topic_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `text` varchar(1024) NOT NULL,
   `author` varchar(50) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `threads` (
+CREATE TABLE `topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
