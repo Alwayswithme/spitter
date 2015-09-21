@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.InetAddresses;
 import lombok.extern.slf4j.Slf4j;
 import me.phx.model.Comment;
+import me.phx.mybatis.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
+
+    @Autowired
+    CommentMapper commentMapper;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -70,5 +74,15 @@ public class CommentController {
         log.info(id.toString());
 
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = GET)
+    public ResponseEntity<?> get(@PathVariable Integer id) {
+        log.info(id.toString());
+        Comment comment = commentMapper.selectByPrimaryKey(id);
+        if (comment == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(comment);
     }
 }
