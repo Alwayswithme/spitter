@@ -30,3 +30,8 @@ logging:
 my:
   enable:
     schedule: false
+
+---
+multipart:
+  maxFileSize: 128KB
+  maxRequestSize: 128KB
