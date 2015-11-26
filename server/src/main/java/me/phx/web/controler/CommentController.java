@@ -1,8 +1,5 @@
 package me.phx.web.controler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.net.InetAddresses;
 import lombok.extern.slf4j.Slf4j;
 import me.phx.model.Comment;
 import me.phx.mybatis.mapper.CommentMapper;
@@ -11,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -27,24 +23,6 @@ public class CommentController {
     @Autowired
     CommentMapper commentMapper;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-    @RequestMapping("/test")
-    public Comment test() throws JsonProcessingException {
-        Comment c = new Comment();
-        c.setAuthor("hhh");
-        c.setCreated(LocalDateTime.now());
-        c.setEmail("aaa");
-        c.setIpAddress(InetAddresses.forString("127.0.0.1").getAddress());
-        c.setLikes(0);
-        c.setParentId(null);
-        c.setText("comments");
-        c.setTopicId(1);
-
-        String s = objectMapper.writeValueAsString(c);
-        return c;
-    }
 
     @RequestMapping(value = "/", method = POST, consumes = {APPLICATION_JSON_VALUE})
     public ResponseEntity<?> create(@RequestBody Comment comment) {
