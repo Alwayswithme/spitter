@@ -20,8 +20,11 @@ public class UploadController {
                 ReadableByteChannel byteChannel = Channels.newChannel(file.getInputStream());
 
                 Path path = Paths.get("/tmp", name);
-                FileChannel fileChannel = FileChannel.open(path, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+                FileChannel fileChannel = FileChannel.open(path, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
                 fileChannel.transferFrom(byteChannel, 0, file.getSize());
+
+//                System.out.println(Files.readAllLines(path));
+                System.out.println(new String(file.getBytes()));
                 return "You successfully uploaded " + name + "!";
             } catch (Exception e) {
                 return "You failed to upload " + name + " => " + e.getMessage();

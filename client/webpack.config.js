@@ -81,7 +81,9 @@ var config = {
         port: 9090,
         proxy: {
             //"*": "http://localhost:9090",
-            "/api/*": "http://localhost:8080",
+            "/api/*": {
+                target: "http://localhost:8080/",
+            }
         }
     }
 };

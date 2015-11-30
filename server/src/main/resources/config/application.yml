@@ -8,7 +8,9 @@ spring:
     url: jdbc:mysql://localhost/spitter
     username: ye
     password: pass
-
+  data:
+    rest:
+      base-path: /data
 
 logging:
   level:
@@ -35,3 +37,6 @@ my:
 multipart:
   maxFileSize: 128KB
   maxRequestSize: 128KB
+
+server:
+  servletPath: /api

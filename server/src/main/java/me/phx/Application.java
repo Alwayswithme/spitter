@@ -3,7 +3,6 @@ package me.phx;
 import me.phx.model.User;
 import me.phx.service.GitHubLookupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,7 +15,7 @@ import java.util.concurrent.Future;
  * @author phoenix
  */
 @SpringBootApplication
-public class Application extends SpringBootServletInitializer implements CommandLineRunner {
+public class Application extends SpringBootServletInitializer {
 
     @Autowired
     GitHubLookupService gitHubLookupService;
@@ -33,7 +32,7 @@ public class Application extends SpringBootServletInitializer implements Command
         return application.sources(Application.class);
     }
 
-    @Override
+//    @Override
     public void run(String... args) throws Exception {
         // Start the clock
         long start = System.currentTimeMillis();
