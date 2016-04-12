@@ -33,8 +33,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // @formatter:off
         clients.inMemory().withClient("my-trusted-client")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust")
-                .resourceIds("oauth2-resource").accessTokenValiditySeconds(600);
+                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+                .scopes("read", "write", "trust")
+                .resourceIds("oauth2-resource")
+                .accessTokenValiditySeconds(600)
+                .secret("secret");
         // @formatter:on
     }
 

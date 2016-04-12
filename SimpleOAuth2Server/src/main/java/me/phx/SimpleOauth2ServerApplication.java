@@ -24,6 +24,7 @@ public class SimpleOauth2ServerApplication {
     public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository) throws Exception {
         if (repository.count()==0) {
             repository.save(new User("user", "123456", Arrays.asList(new Role("USER"))));
+            repository.save(new User("my-trusted-client", "123456", Arrays.asList(new Role("CLIENT"))));
         }
 
         UserDetailsService service = username -> new CustomUserDetails(repository.findByUsername(username));
